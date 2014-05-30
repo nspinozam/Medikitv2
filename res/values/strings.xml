@@ -5,6 +5,7 @@
     <string name="label_usuarios">Usuarios</string>
     <string name="label_medicamentos">Medicamentos</string>
     <string name="label_agregar_receta">Agregar Receta</string>
+    <string name="label_presentacion">Presentaciones</string>
     <string name="hello_world">Hello world!</string>
     <string name="new_user">Nuevo Usuario</string>
     <string name="new_recipe">Nueva Receta</string>
@@ -19,6 +20,7 @@
     <string name="receta_header">Información de la receta</string>
     <string name="nombre_medicamento">Medicamento</string>
     <string name="nombre_med_comercial">Nombre Comercial</string>
-    <string name="nombre_med_generico">Nombre Generico</string>
+    <string name="nombre_med_generico">Nombre Genérico</string>
+    <string name="nombre_presentacion">Presentación</string>
 
 </resources>

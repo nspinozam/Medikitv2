@@ -23,6 +23,7 @@ import android.widget.ListView;
 
 public class ActivityAgregarReceta extends Activity{
 	Button btn_nombre;
+	Button btn_presentacion;
 	boolean actualizar;
 	Context ctx;
 	
@@ -35,11 +36,20 @@ public class ActivityAgregarReceta extends Activity{
 		ctx = this;
 		//Elementos de UI
         btn_nombre = (Button)findViewById(R.id.btn_n);
+        btn_presentacion = (Button)findViewById(R.id.btn_presentacion);
         btn_nombre.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				Intent i = new Intent(ctx, ActivityListMedicamento.class);
+				startActivity(i);
+			}
+		});
+        
+        btn_presentacion.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(ctx, ActivityListPresentacion.class);
 				startActivity(i);
 			}
 		});

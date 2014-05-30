@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
     <Button
         android:id="@+id/btn_n"
@@ -12,5 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/nombre_medicamento" />
+
+    <Button
+        android:id="@+id/btn_presentacion"
+        style="?android:editTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/nombre_presentacion" />
      
 </LinearLayout>

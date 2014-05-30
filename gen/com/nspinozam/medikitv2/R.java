@@ -30,16 +30,17 @@ public final class R {
         public static final int imgadd=0x7f020005;
     }
     public static final class id {
-        public static final int add_newreceta=0x7f080006;
-        public static final int add_newuser=0x7f080007;
-        public static final int borrar_usuario_context=0x7f080009;
+        public static final int add_newreceta=0x7f080007;
+        public static final int add_newuser=0x7f080008;
+        public static final int borrar_usuario_context=0x7f08000a;
         public static final int btn_n=0x7f080000;
-        public static final int btn_nombre=0x7f080002;
-        public static final int dialog_addmedicamento_name=0x7f080003;
-        public static final int dialog_addmedicamento_nombre_generico=0x7f080004;
-        public static final int dialog_adduser_name=0x7f080005;
-        public static final int drugsListView=0x7f080001;
-        public static final int modificar_usuario_context=0x7f080008;
+        public static final int btn_nombre=0x7f080003;
+        public static final int btn_presentacion=0x7f080001;
+        public static final int dialog_addmedicamento_name=0x7f080004;
+        public static final int dialog_addmedicamento_nombre_generico=0x7f080005;
+        public static final int dialog_adduser_name=0x7f080006;
+        public static final int drugsListView=0x7f080002;
+        public static final int modificar_usuario_context=0x7f080009;
     }
     public static final class layout {
         public static final int activity_agregar_receta_n=0x7f030000;
@@ -54,25 +55,27 @@ public final class R {
         public static final int usuario_context_menu=0x7f070002;
     }
     public static final class string {
-        public static final int agregar=0x7f050008;
+        public static final int agregar=0x7f050009;
         public static final int app_name=0x7f050000;
-        public static final int cancelar=0x7f050009;
-        public static final int delete=0x7f05000d;
-        public static final int hello_world=0x7f050004;
+        public static final int cancelar=0x7f05000a;
+        public static final int delete=0x7f05000e;
+        public static final int hello_world=0x7f050005;
         public static final int label_agregar_receta=0x7f050003;
         public static final int label_medicamentos=0x7f050002;
+        public static final int label_presentacion=0x7f050004;
         public static final int label_usuarios=0x7f050001;
-        public static final int medicamento_insercion_error=0x7f05000b;
-        public static final int new_recipe=0x7f050006;
-        public static final int new_user=0x7f050005;
-        public static final int new_user_name=0x7f050007;
-        public static final int nombre_med_comercial=0x7f050011;
-        public static final int nombre_med_generico=0x7f050012;
-        public static final int nombre_medicamento=0x7f050010;
-        public static final int presentacion_insercion_error=0x7f05000c;
-        public static final int receta_header=0x7f05000f;
-        public static final int update=0x7f05000e;
-        public static final int usuario_insercion_error=0x7f05000a;
+        public static final int medicamento_insercion_error=0x7f05000c;
+        public static final int new_recipe=0x7f050007;
+        public static final int new_user=0x7f050006;
+        public static final int new_user_name=0x7f050008;
+        public static final int nombre_med_comercial=0x7f050012;
+        public static final int nombre_med_generico=0x7f050013;
+        public static final int nombre_medicamento=0x7f050011;
+        public static final int nombre_presentacion=0x7f050014;
+        public static final int presentacion_insercion_error=0x7f05000d;
+        public static final int receta_header=0x7f050010;
+        public static final int update=0x7f05000f;
+        public static final int usuario_insercion_error=0x7f05000b;
     }
     public static final class style {
         /** 
