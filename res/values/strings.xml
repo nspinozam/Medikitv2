@@ -23,5 +23,7 @@
     <string name="nombre_med_generico">Nombre Genérico</string>
     <string name="nombre_presentacion">Presentación</string>
     <string name="nota_presentacion">Nota sobre la presentación</string>
+    <string name="dosis">Dosis</string>
+    <string name="fecha_inicio">Fecha de Inicio</string>
 
 </resources>

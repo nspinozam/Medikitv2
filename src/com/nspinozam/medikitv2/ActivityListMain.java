@@ -29,7 +29,7 @@ public class ActivityListMain extends Activity{
 		SharedPreferences prefs =
 			     getSharedPreferences("MedikitPreferences",Context.MODE_PRIVATE);
 			 
-			int id = prefs.getInt("IdUsuario", 6);
+			int id = prefs.getInt("IdUsuario", 9999);
 			Log.i("id",String.valueOf(id));
 	}
 	

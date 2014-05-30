@@ -55,9 +55,14 @@ public class ActivityListUser extends Activity implements Parcelable{
 		listaPacientes = core.UsuariosList(ctx);
 		ArrayAdapter<Usuario> adapter = new ArrayAdapter<Usuario>(this,
                 android.R.layout.simple_list_item_1, listaPacientes);
+		
+		if(listaPacientes.size()==0){
+        	//TODO Agregar Background
+        }
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(onClick);
         list.setOnItemLongClickListener(onLongClick);
+        
         if(listaPacientes.size()>0 && !BACK){
         	SharedPreferences prefs = getSharedPreferences("MedikitPreferences",Context.MODE_PRIVATE);
    			int uId = prefs.getInt("IdUsuario", 0);

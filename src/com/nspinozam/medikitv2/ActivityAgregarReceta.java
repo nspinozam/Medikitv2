@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+//TODO Si se cambia la orientación se "borran" los datos
+
 public class ActivityAgregarReceta extends Activity{
 	Button btn_nombre;
 	Button btn_presentacion;
@@ -64,6 +66,7 @@ public class ActivityAgregarReceta extends Activity{
 	public void onResume(){
 		super.onResume();
 		try {
+			//TODO No aparece nada sin no existe nada en el medicamento
 			btn_nombre.setText(medicamento.toString());
 			btn_presentacion.setText(presentacion.toString());
 		} catch (Exception e) {
