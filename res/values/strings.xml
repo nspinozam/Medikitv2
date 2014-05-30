@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Medikit</string>
+    <string name="label_usuarios">Usuarios</string>
+    <string name="label_medicamentos">Medicamentos</string>
+    <string name="label_agregar_receta">Agregar Receta</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="new_user">Nuevo Usuario</string>
+    <string name="new_recipe">Nueva Receta</string>
+    <string name="new_user_name">Nombre de Usuario</string>
+    <string name="agregar">Agregar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="usuario_insercion_error">Usuario no insertado, intentelo nuevamente</string>
+    <string name="medicamento_insercion_error">Medicamento no insertado, intentelo nuevamente</string>
+    <string name="presentacion_insercion_error">Presentación no insertada, intentelo nuevamente</string>
+    <string name="delete">Borrar</string>
+    <string name="update">Modificar</string>
+    <string name="receta_header">Información de la receta</string>
+    <string name="nombre_medicamento">Medicamento</string>
+    <string name="nombre_med_comercial">Nombre Comercial</string>
+    <string name="nombre_med_generico">Nombre Generico</string>
+
+</resources>

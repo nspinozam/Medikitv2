@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item 
+        android:id="@+id/modificar_usuario_context"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText"
+        android:title="@string/update"
+        android:icon="@drawable/edit_icon"
+        />
+    
+    <item 
+        android:id="@+id/borrar_usuario_context"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText"
+        android:title="@string/delete"
+        android:icon="@drawable/delete_icon"
+        />
+</menu>

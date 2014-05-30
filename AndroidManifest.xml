@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nspinozam.medikitv2"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/label_usuarios"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.nspinozam.medikitv2.ActivityListUser"
+            android:label="@string/label_usuarios" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity 
+            android:name="com.nspinozam.medikitv2.ActivityListMain"
+            android:label="@string/app_name"
+            android:parentActivityName="com.nspinozam.medikitv2.ActivityListUser">
+        </activity>
+        
+        <activity 
+            android:name="com.nspinozam.medikitv2.ActivityAgregarReceta"
+            android:label="@string/label_agregar_receta"
+            android:parentActivityName="com.nspinozam.medikitv2.ActivityListMain">
+        </activity>
+        
+        <activity 
+            android:name="com.nspinozam.medikitv2.ActivityListMedicamento"
+            android:label="@string/label_medicamentos"
+            android:parentActivityName="com.nspinozam.medikitv2.ActivityAgregarReceta">
+        </activity>
+        
+    </application>
+
+</manifest>

@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.nspinozam.medikitv2.ActivityListUser" >
+
+    <item
+        android:id="@+id/add_newuser"
+        android:orderInCategory="100"
+        android:showAsAction="always|collapseActionView"
+        android:title="@string/new_user"
+        android:icon="@drawable/ic_add_patient"/>
+
+</menu>
