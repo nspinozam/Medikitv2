@@ -16,5 +16,17 @@ public class Presentacion {
 		this.nombrePresentacion = nombre;
 		this.notaPresentacion = nota;
 	}
+	
+	@Override
+	public String toString(){
+		String res = "";
+		if(this.notaPresentacion!=null && !this.notaPresentacion.equals("")){
+			res = this.nombrePresentacion+"\nNota: "+this.notaPresentacion;
+		}
+		else{
+			res = this.nombrePresentacion;
+		}
+		return res;
+	}
 
 }

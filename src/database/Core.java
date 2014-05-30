@@ -272,8 +272,8 @@ public class Core {
 	/**
 	 * Funcion para obtener los datos de las presentaciones.
 	 */
-	public ArrayList<String[]> PresentacionesList(Context context) {
-		ArrayList<String[]> listaPresentaciones = new ArrayList<String[]>();
+	public ArrayList<Presentacion> PresentacionesList(Context context) {
+		ArrayList<Presentacion> listaPresentaciones = new ArrayList<Presentacion>();
 		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
 		SQLiteDatabase db = rdb.getReadableDatabase();
 
@@ -283,11 +283,8 @@ public class Core {
 					null);
 			if (query.moveToFirst()) {
 				do {
-					String[] buffer = new String[3];
-					buffer[0] = query.getString(0);
-					buffer[1] = query.getString(1);
-					buffer[2] = query.getString(2);
-					listaPresentaciones.add(buffer);
+					Presentacion temp = new Presentacion(query.getInt(0),query.getString(1), query.getString(2));
+					listaPresentaciones.add(temp);
 				} while (query.moveToNext());
 			}
 		}

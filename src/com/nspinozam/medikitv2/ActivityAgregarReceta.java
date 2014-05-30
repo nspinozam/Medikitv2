@@ -3,6 +3,7 @@ package com.nspinozam.medikitv2;
 
 import database.Core;
 import models.Medicamento;
+import models.Presentacion;
 import models.Usuario;
 import android.app.Activity;
 import android.content.Context;
@@ -28,11 +29,13 @@ public class ActivityAgregarReceta extends Activity{
 	Context ctx;
 	
 	public static Medicamento medicamento;
+	public static Presentacion presentacion;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_agregar_receta_n);
+		//TODO probar con medicamento=null, para quitar que cuando se va acrear uno nuevo, le salga el último por defecto
 		ctx = this;
 		//Elementos de UI
         btn_nombre = (Button)findViewById(R.id.btn_n);
@@ -62,10 +65,17 @@ public class ActivityAgregarReceta extends Activity{
 		super.onResume();
 		try {
 			btn_nombre.setText(medicamento.toString());
+			btn_presentacion.setText(presentacion.toString());
 		} catch (Exception e) {
 			
 		}
 		
+	}
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		medicamento = null;
+		presentacion = null;
 	}
 	
 

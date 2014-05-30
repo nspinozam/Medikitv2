@@ -22,5 +22,6 @@
     <string name="nombre_med_comercial">Nombre Comercial</string>
     <string name="nombre_med_generico">Nombre Genérico</string>
     <string name="nombre_presentacion">Presentación</string>
+    <string name="nota_presentacion">Nota sobre la presentación</string>
 
 </resources>

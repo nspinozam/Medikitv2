@@ -30,24 +30,27 @@ public final class R {
         public static final int imgadd=0x7f020005;
     }
     public static final class id {
-        public static final int add_newreceta=0x7f080007;
-        public static final int add_newuser=0x7f080008;
-        public static final int borrar_usuario_context=0x7f08000a;
+        public static final int add_newreceta=0x7f080009;
+        public static final int add_newuser=0x7f08000a;
+        public static final int borrar_usuario_context=0x7f08000c;
         public static final int btn_n=0x7f080000;
         public static final int btn_nombre=0x7f080003;
         public static final int btn_presentacion=0x7f080001;
         public static final int dialog_addmedicamento_name=0x7f080004;
         public static final int dialog_addmedicamento_nombre_generico=0x7f080005;
-        public static final int dialog_adduser_name=0x7f080006;
+        public static final int dialog_addpresentacion_name=0x7f080006;
+        public static final int dialog_addpresentacion_nota=0x7f080007;
+        public static final int dialog_adduser_name=0x7f080008;
         public static final int drugsListView=0x7f080002;
-        public static final int modificar_usuario_context=0x7f080009;
+        public static final int modificar_usuario_context=0x7f08000b;
     }
     public static final class layout {
         public static final int activity_agregar_receta_n=0x7f030000;
         public static final int activity_list_user=0x7f030001;
         public static final int add_name_row=0x7f030002;
         public static final int dialog_addmedicamento=0x7f030003;
-        public static final int dialog_adduser=0x7f030004;
+        public static final int dialog_addpresentacion=0x7f030004;
+        public static final int dialog_adduser=0x7f030005;
     }
     public static final class menu {
         public static final int activity_list_receta=0x7f070000;
@@ -72,6 +75,7 @@ public final class R {
         public static final int nombre_med_generico=0x7f050013;
         public static final int nombre_medicamento=0x7f050011;
         public static final int nombre_presentacion=0x7f050014;
+        public static final int nota_presentacion=0x7f050015;
         public static final int presentacion_insercion_error=0x7f05000d;
         public static final int receta_header=0x7f050010;
         public static final int update=0x7f05000f;
