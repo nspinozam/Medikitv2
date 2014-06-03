@@ -25,5 +25,10 @@
     <string name="nota_presentacion">Nota sobre la presentación</string>
     <string name="dosis">Dosis</string>
     <string name="fecha_inicio">Fecha de Inicio</string>
+    <string name="hora_inicio">Hora de Inicio</string>
+    <string name="cada">Cada</string>
+    <string name="dias">Dia(s).</string>
+    <string name="veces_dia">Veces por día</string>
+    <string name="nota">Nota</string>
 
 </resources>
