@@ -1,122 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
-    <Button
-        android:id="@+id/btn_n"
-        style="?android:editTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/nombre_medicamento" 
-        />
-
-    <requestFocus
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/tv_dosis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dosis"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/et_cantidad"
-            android:layout_width="116dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number" />
-
-        <Button
-            android:id="@+id/btn_presentacion"
-            style="?android:editTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/nombre_presentacion" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_fecha_inicio"
-        android:layout_width="match_parent"
-        style="?android:editTextStyle"
-        android:layout_height="wrap_content"
-        android:hint="@string/fecha_inicio" />
-
-    <Button
-        android:id="@+id/btn_hora_inicio"
-        style="?android:editTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hora_inicio" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cada"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/et_cantidad_dias"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.47"
-            android:ems="10"
-            android:inputType="number" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dias"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-        
-         <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/veces_dia"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-         <EditText
-             android:id="@+id/et_veces_dia"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:ems="10"
-             android:inputType="number" />
-
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/et_nota"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/nota"
-        android:inputType="textMultiLine" />
-
-</LinearLayout>
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="#FFFFFF"
+	    android:orientation="vertical" >
+	
+	    <Button
+	        android:id="@+id/btn_n"
+	        style="?android:editTextStyle"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:hint="@string/nombre_medicamento" 
+	        android:focusable="false"
+	        />
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+	
+	        <TextView
+	            android:id="@+id/tv_dosis"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/dosis"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	        <EditText
+	            android:id="@+id/et_cantidad"
+	            android:layout_width="116dp"
+	            android:layout_height="wrap_content"
+	            android:ems="10"
+	            android:inputType="number" />
+	
+	        <Button
+	            android:id="@+id/btn_presentacion"
+	            style="?android:editTextStyle"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:ems="10"
+	            android:focusable="false"
+	            android:hint="@string/nombre_presentacion" />
+	
+	    </LinearLayout>
+	
+	    <Button
+	        android:id="@+id/btn_fecha_inicio"
+	        android:layout_width="match_parent"
+	        style="?android:editTextStyle"
+	        android:layout_height="wrap_content"
+	        android:focusable="false"
+	        android:hint="@string/fecha_inicio" />
+	
+	    <Button
+	        android:id="@+id/btn_hora_inicio"
+	        style="?android:editTextStyle"
+	        android:focusable="false"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:hint="@string/hora_inicio" />
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+	
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/cada"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	        <EditText
+	            android:id="@+id/et_cantidad_dias"
+	            android:layout_width="114dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.47"
+	            android:ems="10"
+	            android:inputType="number" />
+	
+	        <TextView
+	            android:id="@+id/textView2"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/dias"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	    </LinearLayout>
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+	        
+	         <TextView
+	        android:id="@+id/textView3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/veces_dia"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	         <EditText
+	             android:id="@+id/et_veces_dia"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_weight="1"
+	             android:ems="10"
+	             android:inputType="number" />
+	
+	    </LinearLayout>
+	
+	    <EditText
+	        android:id="@+id/et_nota"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:ems="10"
+	        android:hint="@string/nota"
+	        android:inputType="textMultiLine" />
+	
+	</LinearLayout>
+</ScrollView>
