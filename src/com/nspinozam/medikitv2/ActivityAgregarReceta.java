@@ -6,6 +6,7 @@ import java.util.Calendar;
 import database.Core;
 import models.Medicamento;
 import models.Presentacion;
+import models.Receta;
 import models.Usuario;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -31,6 +32,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 //TODO Si se cambia la orientación se "borran" los datos
 
@@ -42,8 +44,10 @@ public class ActivityAgregarReceta extends Activity{
 	EditText cantidad_dosis;
 	EditText et_cantidad_dias;
 	EditText et_veces_dia;
+	EditText et_duracion;
 	EditText et_nota;
 	boolean actualizar;
+	Receta receta;
 	Context ctx;
 	Utilities U = new Utilities();
 	private int horas, minutos;
@@ -67,6 +71,7 @@ public class ActivityAgregarReceta extends Activity{
         et_cantidad_dias = (EditText)findViewById(R.id.et_cantidad_dias);
         et_veces_dia = (EditText)findViewById(R.id.et_veces_dia);
         et_nota = (EditText)findViewById(R.id.et_nota);
+        et_duracion = (EditText)findViewById(R.id.et_cantidad_tiempo);
         cantidad_dosis = (EditText)findViewById(R.id.et_cantidad);
         
         btn_nombre.setOnClickListener(ocNombre);
@@ -81,7 +86,6 @@ public class ActivityAgregarReceta extends Activity{
 	public void onResume(){
 		super.onResume();
 		try {
-			//TODO No aparece nada sin no existe nada en el medicamento
 			btn_nombre.setText(medicamento.toString());
 			btn_presentacion.setText(presentacion.toString());
 		} catch (Exception e) {
@@ -98,15 +102,22 @@ public class ActivityAgregarReceta extends Activity{
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
-		getMenuInflater().inflate(R.menu.activity_list_receta, menu);
+		getMenuInflater().inflate(R.menu.activity_agregar_receta, menu);
 		return true;
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-		if (id == R.id.add_newreceta) {
-			//TODO Agregar receta
+		if (id == R.id.save_receta) {
+			int ok = validarNulos();
+			if(ok==0){
+				Toast.makeText(ctx, "ok", Toast.LENGTH_LONG).show();
+			} else if(ok==1){
+				Toast.makeText(ctx, "La duración no puede ser menor al lapso de tiempo", Toast.LENGTH_LONG).show();
+			} else{
+				Toast.makeText(ctx, "No se permiten espacios vacíos", Toast.LENGTH_LONG).show();
+			}
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -150,6 +161,36 @@ public class ActivityAgregarReceta extends Activity{
 			showTimePickerDialog();
 		}
 	};
+	
+	//Si ningún espacio está vacío, se crea la instacia de la receta y se retorna true
+	public int validarNulos(){
+		int idUsuario = ActivityListMain.prefs.getInt("IdUsuario", 9999);
+		if(!btn_nombre.getText().toString().equals("") && !btn_fechaI.getText().toString().equals("") 
+				&& !btn_horaI.getText().toString().equals("")&& !btn_presentacion.getText().toString().equals("")
+				&& !cantidad_dosis.getText().toString().equals("") && !et_cantidad_dias.getText().toString().equals("")
+				&& !et_veces_dia.getText().toString().equals("") && !et_duracion.getText().toString().equals("")){
+			int cantidadConsumo = Integer.valueOf(cantidad_dosis.getText().toString());
+			String fechaI = btn_fechaI.getText().toString();
+			String HoraI = btn_horaI.getText().toString();
+			int duracionDias = Integer.valueOf(et_duracion.getText().toString());
+			int cadaDias = Integer.valueOf(et_cantidad_dias.getText().toString());
+			int vecesDia = Integer.valueOf(et_veces_dia.getText().toString());
+			String nota = et_nota.getText().toString();
+			if(duracionDias>=cadaDias){
+				receta = new Receta(idUsuario, medicamento.idMedicamento, cantidadConsumo, presentacion.idPresentacion,
+						fechaI, HoraI, duracionDias, cadaDias, vecesDia, nota);
+				return 0;
+			}
+			else{
+				return 1;
+			}
+		}else{
+			return 9;
+		}
+		
+	}
+	//Crea la receta
+	
 	
 	///////////////// PICKERS //////////////////////
 	public void showTimePickerDialog() {
@@ -202,6 +243,7 @@ public class ActivityAgregarReceta extends Activity{
 			btn_fechaI.setText(String.valueOf(dayOfMonth)+"-"+(monthOfYear+1)+"-"+year);
 		}
 	};
+	
 	
 	
 }

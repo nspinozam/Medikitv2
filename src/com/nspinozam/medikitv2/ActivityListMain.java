@@ -18,6 +18,7 @@ public class ActivityListMain extends Activity{
 	
 	Context ctx;
 	Activity activity;
+	public static SharedPreferences prefs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +27,7 @@ public class ActivityListMain extends Activity{
 		ctx = this;
 		activity = this;
 		ActivityListUser.BACK = true;
-		SharedPreferences prefs =
-			     getSharedPreferences("MedikitPreferences",Context.MODE_PRIVATE);
+		prefs = getSharedPreferences("MedikitPreferences",Context.MODE_PRIVATE);
 			 
 			int id = prefs.getInt("IdUsuario", 9999);
 			Log.i("id",String.valueOf(id));

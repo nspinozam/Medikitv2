@@ -64,6 +64,34 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:hint="@string/hora_inicio" />
+
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+	
+	        <TextView
+	            android:id="@+id/textViewc"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/duracion"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	        <EditText
+	            android:id="@+id/et_cantidad_tiempo"
+	            android:layout_width="114dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.47"
+	            android:ems="10"
+	            android:inputType="number" />
+	
+	        <TextView
+	            android:id="@+id/textViewv"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/dias"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	    </LinearLayout>
 	
 	    <LinearLayout
 	        android:layout_width="match_parent"
