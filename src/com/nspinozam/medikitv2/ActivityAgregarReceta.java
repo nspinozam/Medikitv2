@@ -1,7 +1,12 @@
 package com.nspinozam.medikitv2;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import database.Core;
 import models.Medicamento;
@@ -9,14 +14,19 @@ import models.Presentacion;
 import models.Receta;
 import models.Usuario;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.style.SuperscriptSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,6 +41,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -46,10 +57,14 @@ public class ActivityAgregarReceta extends Activity{
 	EditText et_veces_dia;
 	EditText et_duracion;
 	EditText et_nota;
+	EditText GLOBAL;
 	boolean actualizar;
+	LinearLayout mainLayout;
+	Activity activity;
 	Receta receta;
 	Context ctx;
 	Utilities U = new Utilities();
+	public Bundle saved;
 	private int horas, minutos;
 	
 	public static Medicamento medicamento;
@@ -61,6 +76,8 @@ public class ActivityAgregarReceta extends Activity{
 		setContentView(R.layout.activity_agregar_receta_n);
 		this.getWindow().setSoftInputMode(
 			    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		activity = this;
+		saved = savedInstanceState;
 		//TODO probar con medicamento=null, para quitar que cuando se va acrear uno nuevo, le salga el último por defecto
 		ctx = this;
 		//Elementos de UI
@@ -162,6 +179,15 @@ public class ActivityAgregarReceta extends Activity{
 		}
 	};
 	
+	//Boton Hora Inicio Indefinida
+	private OnClickListener ocHoraI = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			showTimePickerDialog();
+		}
+		
+	};
 	//Si ningún espacio está vacío, se crea la instacia de la receta y se retorna true
 	public int validarNulos(){
 		int idUsuario = ActivityListMain.prefs.getInt("IdUsuario", 9999);
@@ -179,6 +205,8 @@ public class ActivityAgregarReceta extends Activity{
 			if(duracionDias>=cadaDias){
 				receta = new Receta(idUsuario, medicamento.idMedicamento, cantidadConsumo, presentacion.idPresentacion,
 						fechaI, HoraI, duracionDias, cadaDias, vecesDia, nota);
+				ArrayList data = calculoHoras(vecesDia, HoraI);
+				onCreateDialog(saved,data);
 				return 0;
 			}
 			else{
@@ -192,6 +220,41 @@ public class ActivityAgregarReceta extends Activity{
 	//Crea la receta
 	
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private ArrayList calculoHoras(int vecesDia, String horaI) {
+		ArrayList temp = new ArrayList();
+		int hora;
+		Date date = null;
+		String horaInicio = horaI;
+		ArrayList array = new ArrayList();
+		SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.US);
+		String[] horaSplit = horaInicio.split(" ");
+		horaInicio = horaSplit[0]+horaSplit[1]+horaSplit[2]+" "+horaSplit[3];
+		hora = 24/vecesDia;
+		Calendar calendar = Calendar.getInstance();
+		try {
+			date = sdf.parse(horaInicio);
+			calendar.setTime(date);
+			temp.add(1);
+			temp.add(sdf.format(date));
+			array.add(temp);
+			Log.i("Hora Actual",sdf.format(calendar.getTime()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		for (int i = 1; i < vecesDia; i++) {
+				calendar.add(Calendar.HOUR, hora);
+				ArrayList temp2 = new ArrayList();
+				temp2.add(i+1);
+				temp2.add(sdf.format(calendar.getTime()));
+				array.add(temp2);
+				Log.i("Hora Nueva",sdf.format(calendar.getTime()));
+			}
+		Log.i("Array",array.toString());
+		return array;
+	}
+
 	///////////////// PICKERS //////////////////////
 	public void showTimePickerDialog() {
     	TimePickerDialog timePickerDialog = new TimePickerDialog(ctx, methodTimePickerDialog, horas, minutos, false); 
@@ -205,23 +268,25 @@ public class ActivityAgregarReceta extends Activity{
 			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 				String minuto;
 	            String horario;
-	            
 	            if (hourOfDay > 11) {
 	            	horario = "PM";
-	            }
-	            
+	            } 
 	            else {
 	            	horario = "AM";
 	            }
-	        	
 	        	if (minute < 10) {
 	        		minuto = "0" + minute;
 	        	} 
-	        	
 	        	else {
 	        		minuto = "" + minute;
 	        	}
-	        	btn_horaI.setText(U.horas(hourOfDay) + " : " + minuto + " " + horario);
+	        	if(GLOBAL==null){
+	        		btn_horaI.setText(U.horas(hourOfDay) + " : " + minuto + " " + horario);
+	        	}
+	        	else{
+	        		GLOBAL.setText(U.horas(hourOfDay) + " : " + minuto + " " + horario);
+	        		GLOBAL=null;
+	        	}
 			}
 		};
 	
@@ -244,6 +309,62 @@ public class ActivityAgregarReceta extends Activity{
 		}
 	};
 	
+	////////////////////// CREACIÓN DEL DIALOGO ///////////////////////
+	@SuppressWarnings("rawtypes")
+	public AlertDialog onCreateDialog(Bundle savedInstanceState, ArrayList array) {	
+	    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+	    LayoutInflater inflater = activity.getLayoutInflater();
+	    final View view = inflater.inflate(R.layout.dialog_addhours, null);
+	    mainLayout = (LinearLayout)view.findViewById(R.id.dialog_layout);
+	    // Se agrega la vista al dialogo
+	    builder.setView(view)
+	    //Se agregan los botones
+	           .setPositiveButton(R.string.agregar, new DialogInterface.OnClickListener() {
+	               @Override
+	               public void onClick(DialogInterface dialog, int id) {}})
+	               
+	           .setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+	               @Override
+	               public void onClick(DialogInterface dialog, int id){
+	            	   dialog.dismiss();
+	            	   onResume();
+	               }
+	           });
+	    final int N = array.size();
+		final EditText[] myTextViews = new EditText[N]; 
+		for (int i = 0; i < N; i++) {
+			ArrayList contenedor = (ArrayList) array.get(i);
+		    final EditText rowTextView = new EditText(this);
+		    rowTextView.setText(contenedor.get(1).toString());
+		    rowTextView.requestFocus();
+		    rowTextView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					GLOBAL = rowTextView;
+					showTimePickerDialog();	
+				}
+			});
+		    mainLayout.addView(rowTextView);
+		    myTextViews[i] = rowTextView;
+		}
+	    //Se construye el Dialog
+	    final AlertDialog dialog = builder.create();
+	    dialog.setTitle("Define las horas de notificación");
+	    dialog.show();
+	    // Se sobre escribe la acción del onclick para mantener el Dialog si hay error
+	    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
+	          {            
+	              @Override
+	              public void onClick(View v)
+	              {
+	                  Boolean wantToCloseDialog = false;
+	                  if(wantToCloseDialog){
+	                      dialog.dismiss();
+	                  }
+	              }
+	          });
+	    return dialog;
+	}
 	
 	
 }
