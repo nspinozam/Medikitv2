@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/nombre_presentacion"
-        android:inputType="textPersonName" >
+        android:inputType="textCapSentences" >
         <requestFocus />
     </EditText>
 
@@ -20,6 +20,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/nota_presentacion"
-        android:inputType="textPersonName" />
+        android:inputType="textCapSentences" />
 
 </LinearLayout>

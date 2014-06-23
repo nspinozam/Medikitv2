@@ -64,6 +64,8 @@ public class ActivityAgregarReceta extends Activity{
 	Receta receta;
 	Context ctx;
 	Utilities U = new Utilities();
+	private Core core = new Core();
+	private ArrayList horasReceta  = new ArrayList();;
 	public Bundle saved;
 	private int horas, minutos;
 	
@@ -106,7 +108,6 @@ public class ActivityAgregarReceta extends Activity{
 			btn_nombre.setText(medicamento.toString());
 			btn_presentacion.setText(presentacion.toString());
 		} catch (Exception e) {
-			
 		}
 		
 	}
@@ -128,9 +129,8 @@ public class ActivityAgregarReceta extends Activity{
 		int id = item.getItemId();
 		if (id == R.id.save_receta) {
 			int ok = validarNulos();
-			if(ok==0){
-				Toast.makeText(ctx, "ok", Toast.LENGTH_LONG).show();
-			} else if(ok==1){
+			if(ok == 0){}
+			else if(ok==1){
 				Toast.makeText(ctx, "La duración no puede ser menor al lapso de tiempo", Toast.LENGTH_LONG).show();
 			} else{
 				Toast.makeText(ctx, "No se permiten espacios vacíos", Toast.LENGTH_LONG).show();
@@ -178,17 +178,9 @@ public class ActivityAgregarReceta extends Activity{
 			showTimePickerDialog();
 		}
 	};
-	
-	//Boton Hora Inicio Indefinida
-	private OnClickListener ocHoraI = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			showTimePickerDialog();
-		}
-		
-	};
+
 	//Si ningún espacio está vacío, se crea la instacia de la receta y se retorna true
+	@SuppressWarnings("rawtypes")
 	public int validarNulos(){
 		int idUsuario = ActivityListMain.prefs.getInt("IdUsuario", 9999);
 		if(!btn_nombre.getText().toString().equals("") && !btn_fechaI.getText().toString().equals("") 
@@ -230,7 +222,7 @@ public class ActivityAgregarReceta extends Activity{
 		SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.US);
 		String[] horaSplit = horaInicio.split(" ");
 		horaInicio = horaSplit[0]+horaSplit[1]+horaSplit[2]+" "+horaSplit[3];
-		hora = 24/vecesDia;
+		hora = 24/vecesDia; //TODO revisar que pasa cuando hay decimales... bueno, agregarselos a los minutos
 		Calendar calendar = Calendar.getInstance();
 		try {
 			date = sdf.parse(horaInicio);
@@ -311,14 +303,12 @@ public class ActivityAgregarReceta extends Activity{
 	
 	////////////////////// CREACIÓN DEL DIALOGO ///////////////////////
 	@SuppressWarnings("rawtypes")
-	public AlertDialog onCreateDialog(Bundle savedInstanceState, ArrayList array) {	
+	public AlertDialog onCreateDialog(Bundle savedInstanceState, final ArrayList array) {	
 	    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 	    LayoutInflater inflater = activity.getLayoutInflater();
 	    final View view = inflater.inflate(R.layout.dialog_addhours, null);
 	    mainLayout = (LinearLayout)view.findViewById(R.id.dialog_layout);
-	    // Se agrega la vista al dialogo
 	    builder.setView(view)
-	    //Se agregan los botones
 	           .setPositiveButton(R.string.agregar, new DialogInterface.OnClickListener() {
 	               @Override
 	               public void onClick(DialogInterface dialog, int id) {}})
@@ -336,6 +326,7 @@ public class ActivityAgregarReceta extends Activity{
 			ArrayList contenedor = (ArrayList) array.get(i);
 		    final EditText rowTextView = new EditText(this);
 		    rowTextView.setText(contenedor.get(1).toString());
+		    rowTextView.setFocusable(false);
 		    rowTextView.requestFocus();
 		    rowTextView.setOnClickListener(new OnClickListener() {
 				@Override
@@ -354,16 +345,31 @@ public class ActivityAgregarReceta extends Activity{
 	    // Se sobre escribe la acción del onclick para mantener el Dialog si hay error
 	    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
 	          {            
-	              @Override
+	              @SuppressWarnings("unchecked")
+				@Override
 	              public void onClick(View v)
 	              {
-	                  Boolean wantToCloseDialog = false;
+	                  Boolean wantToCloseDialog = true;
+	                  for (int i = 0; i < myTextViews.length; i++) {
+	                	  ArrayList contenedor = (ArrayList) array.get(i);
+	                	  contenedor.remove(1);
+	                	  contenedor.add(myTextViews[i].getText().toString());
+					}
 	                  if(wantToCloseDialog){
+	                	  horasReceta = array;
 	                      dialog.dismiss();
+	                      agregarDB();
 	                  }
 	              }
 	          });
+	   
 	    return dialog;
+	}
+	
+	public void agregarDB(){
+		long idReceta = core.agregarReceta(receta, ctx);
+		core.agregarHorarios(idReceta, horasReceta, ctx);
+		activity.finish();
 	}
 	
 	

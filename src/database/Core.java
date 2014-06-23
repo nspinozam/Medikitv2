@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import models.Medicamento;
 import models.Presentacion;
+import models.Receta;
 import models.Usuario;
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaExtractor;
+import android.util.Log;
 
 public class Core {
 
@@ -218,6 +220,69 @@ public class Core {
 		}
 		return res;
 	}
+
+	/**
+	 * Funcion para agregar la receta a la base de datos.
+	 * @param user instancia de la receta
+	 * @param context contexto de la aplicación
+	 * @return
+	 */
+	public long agregarReceta(Receta receta,Context context){
+		long id = 0;
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getWritableDatabase();
+		if (db != null) {
+			try {
+				ContentValues nuevoRegistro = new ContentValues();
+				nuevoRegistro.put("idUsuario", receta.idUsuario);
+				nuevoRegistro.put("idMedicina", receta.idMedicina);
+				nuevoRegistro.put("cantidadConsumo", receta.cantidadConsumo);
+				nuevoRegistro.put("idTipoConsumo", receta.idTipoConsumo);
+				nuevoRegistro.put("fechaI", receta.fechaI);
+				nuevoRegistro.put("duracionDias", receta.duracionDias);
+				nuevoRegistro.put("cadaDias", receta.cadaDias);
+				nuevoRegistro.put("vecesDia", receta.vecesDia);
+				nuevoRegistro.put("nota", receta.nota);
+				id = db.insert("Receta", null, nuevoRegistro);
+			} catch (SQLException e) {
+				//retorno el error
+				return -1;
+			}
+		}
+		db.close();
+		return id;
+	}
+	/**
+	 * Funcion para agregar los horarios a la base de datos
+	 * @param idReceta identificador de la receta.
+	 * @param horarios array con el horario de la receta
+	 * 
+	 * @param context contexto de la aplicación
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	public long agregarHorarios(long idReceta,ArrayList horarios, Context context){
+		long id = 0;
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getWritableDatabase();
+		if (db != null) {
+			try {
+				for (int i = 0; i < horarios.size(); i++) {
+					ArrayList contenedor = (ArrayList) horarios.get(i);
+					ContentValues nuevoRegistro = new ContentValues();
+					nuevoRegistro.put("idReceta", idReceta);
+					nuevoRegistro.put("hora", contenedor.get(1).toString());
+					id = db.insert("Hour", null, nuevoRegistro);
+				}
+				
+			} catch (SQLException e) {
+				//retorno el error
+				return -1;
+			}
+		}
+		db.close();
+		return id;
+	}
 	
 	/**
 	 * Obtiene un arraylist con el nombre e identificador del usuario
@@ -292,5 +357,31 @@ public class Core {
 		return listaPresentaciones;
 	}
 
+	/**
+	 * Funcion para obtener los datos de las presentaciones.
+	 */
+	public ArrayList RecetaListInicial(int id,Context context) {
+		ArrayList listaPresentaciones = new ArrayList();
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getReadableDatabase();
+
+		if (db != null) {
+			//String[] fields = new String[] { "idPresentacion", "nombrePresentacion" ,"notaPresentacion"};
+			Cursor query = db.rawQuery("SELECT idReceta, cantidadConsumo,nombrePresentacion, nombreComercial FROM Receta, Medicamento, Presentacion "
+					+ "WHERE Receta.idTipoConsumo = Presentacion.idPresentacion AND Receta.idMedicina = Medicamento.idMedicamento AND Receta.idUsuario = "+id,null);
+			if (query.moveToFirst()) {
+				do {
+					ArrayList temp = new ArrayList();
+					temp.add(query.getInt(0));
+					temp.add(query.getInt(1));
+					temp.add(query.getString(2));
+					temp.add(query.getString(3));
+					listaPresentaciones.add(temp);
+				} while (query.moveToNext());
+			}
+		}
+		db.close();
+		return listaPresentaciones;
+	}
 
 }

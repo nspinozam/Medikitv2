@@ -15,10 +15,15 @@ public class MedikitDB extends SQLiteOpenHelper {
 			+ "nombreGenerico TEXT)";
 	private static final String PRESENTATION_SQL = "CREATE TABLE IF NOT EXISTS Presentacion(idPresentacion INTEGER PRIMARY KEY AUTOINCREMENT, nombrePresentacion TEXT UNIQUE, "
 			+ "notaPresentacion TEXT)";
-	private static final String HOUR_SQL = "CREATE TABLE IF NOT EXISTS Hour (idReceta INTEGER PRIMARY KEY AUTOINCREMENT, hora TEXT)";
 			
 	private static final String DROP_SQL = "DROP TABLE IF EXISTS User";
-
+	
+	private static final String RECIPE_SQL = "CREATE TABLE IF NOT EXISTS 	Receta (idReceta INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER, idMedicina INTEGER,"
+			+ " cantidadConsumo INTEGER, idTipoConsumo INTEGER, fechaI TEXT, duracionDias INTEGER, cadaDias INTEGER, vecesDia INTEGER, nota TEXT, "
+			+ "FOREIGN KEY(idUsuario) REFERENCES Usuario(idUser), FOREIGN KEY(idMedicina) REFERENCES Medicamento(idMedicamento), "
+			+ "FOREIGN KEY(idTipoConsumo) REFERENCES Presentacion(idPresentacion))";
+	
+	private static final String HOUR_SQL = "CREATE TABLE IF NOT EXISTS Hour (idReceta INTEGER, hora TEXT, FOREIGN KEY(idReceta) REFERENCES Receta(idReceta))";
 	
 	public MedikitDB(Context context, String name, CursorFactory factory, int version) {
 		super(context, name, factory, version);
@@ -30,6 +35,7 @@ public class MedikitDB extends SQLiteOpenHelper {
 		db.execSQL(MEDICINE_SQL);
 		db.execSQL(PRESENTATION_SQL);
 		db.execSQL(HOUR_SQL);
+		db.execSQL(RECIPE_SQL);
 	}
 
 	@Override
@@ -38,6 +44,7 @@ public class MedikitDB extends SQLiteOpenHelper {
 		db.execSQL(MEDICINE_SQL);
 		db.execSQL(PRESENTATION_SQL);
 		db.execSQL(HOUR_SQL);
+		db.execSQL(RECIPE_SQL);
 	}
 
 }

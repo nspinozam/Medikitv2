@@ -1,5 +1,8 @@
 package com.nspinozam.medikitv2;
 
+import java.util.ArrayList;
+
+import models.Receta;
 import models.Usuario;
 import database.Core;
 import android.app.Activity;
@@ -15,9 +18,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class ActivityListMain extends Activity{
-	
+	public Core core;
 	Context ctx;
 	Activity activity;
+	ListView list;
+	int id;
+	ArrayList<Receta> listaRecetas = new ArrayList<Receta>();//TODO revisar si hay que hacer una clase nueva para agregar las recetas o con la existente ya basta
 	public static SharedPreferences prefs;
 
 	@Override
@@ -25,12 +31,19 @@ public class ActivityListMain extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_user);
 		ctx = this;
+		core = new Core();
 		activity = this;
 		ActivityListUser.BACK = true;
+		list = (ListView) findViewById(R.id.drugsListView); 
 		prefs = getSharedPreferences("MedikitPreferences",Context.MODE_PRIVATE);
-			 
-			int id = prefs.getInt("IdUsuario", 9999);
-			Log.i("id",String.valueOf(id));
+		id = prefs.getInt("IdUsuario", 9999);
+		Log.i("id",String.valueOf(id));
+		//Cargar lista de pacientes
+		listaRecetas = core.RecetaListInicial(id,ctx);
+		/*ArrayAdapter<Receta> adapter = new ArrayAdapter<Receta>(this,
+                android.R.layout.simple_list_item_1, listaRecetas);
+		list.setAdapter(adapter);*/
+		Log.i("RecetaList", listaRecetas.toString());
 	}
 	
 	@Override
@@ -61,7 +74,18 @@ public class ActivityListMain extends Activity{
 	@Override
 	public void onResume(){
 		super.onResume();
-		//TODO acción para refrescar la lista
+		core = new Core();
+		ctx = this;
+		activity = this;
+		list = (ListView) findViewById(R.id.drugsListView);
+		
+		//Cargar lista de pacientes
+		listaRecetas = core.RecetaListInicial(id,ctx);
+		/*ArrayAdapter<Receta> adapter = new ArrayAdapter<Receta>(this,
+                android.R.layout.simple_list_item_1, listaRecetas);
+		list.setAdapter(adapter);*/
+		//Log.i("RecetaList", listaRecetas.toString());
+		//list.setOnItemClickListener(onClick);
 	}
 
 }
