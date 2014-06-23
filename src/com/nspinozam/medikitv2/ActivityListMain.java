@@ -40,9 +40,9 @@ public class ActivityListMain extends Activity{
 		Log.i("id",String.valueOf(id));
 		//Cargar lista de pacientes
 		listaRecetas = core.RecetaListInicial(id,ctx);
-		/*ArrayAdapter<Receta> adapter = new ArrayAdapter<Receta>(this,
+		ArrayAdapter<Receta> adapter = new ArrayAdapter<Receta>(this,
                 android.R.layout.simple_list_item_1, listaRecetas);
-		list.setAdapter(adapter);*/
+		list.setAdapter(adapter);
 		Log.i("RecetaList", listaRecetas.toString());
 	}
 	
