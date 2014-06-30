@@ -104,13 +104,13 @@ public class ActivityListPresentacion extends Activity implements Parcelable{
 	    final EditText tv_nuevoNombre;
 	    final EditText tv_nuevaNota;
 	    if(accion == 1){
-	    	dialog.setTitle("Agrega una nueva Presentaci贸n");
+	    	dialog.setTitle("Agrega una nueva Presentaci髇");
 		    dialog.show();
 		    tv_nuevoNombre = (EditText)view.findViewById(R.id.dialog_addpresentacion_name);
 		    tv_nuevaNota = (EditText)view.findViewById(R.id.dialog_addpresentacion_nota);
 	    }
 	    else{
-	    	dialog.setTitle("Modifica la Presentaci贸n");
+	    	dialog.setTitle("Modifica la Presentaci髇");
 		    dialog.show();
 		    tv_nuevoNombre = (EditText)view.findViewById(R.id.dialog_addpresentacion_name);
 		    tv_nuevaNota = (EditText)view.findViewById(R.id.dialog_addpresentacion_nota);
@@ -118,7 +118,7 @@ public class ActivityListPresentacion extends Activity implements Parcelable{
 		    tv_nuevaNota.setText(presD.notaPresentacion);
 	    }
 	    
-	    // Se sobre escribe la acci贸n del onclick para mantener el Dialog si hay error
+	    // Se sobre escribe la acci髇 del onclick para mantener el Dialog si hay error
 	    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
 	          {            
 	              @Override
@@ -126,7 +126,7 @@ public class ActivityListPresentacion extends Activity implements Parcelable{
 	              {
 	                  Boolean wantToCloseDialog = false;
 	                //TODO Agregar un hilo
-	                  //Acci贸n del bot贸n aceptar
+	                  //Acci髇 del bot髇 aceptar
 	            	  
 	                  tv_nuevoNombre.addTextChangedListener(new TextWatcher() {
 	            		    @Override
@@ -159,6 +159,7 @@ public class ActivityListPresentacion extends Activity implements Parcelable{
 							resTexto = "agregada";
 							resTexto2 = "agregar";
 							ActivityAgregarReceta.presentacion = pres;
+							ActivityVerEditarReceta.presentacion = pres;
 							break;
 						case 2:
 							presD.nombrePresentacion=nombrePres;
@@ -167,22 +168,23 @@ public class ActivityListPresentacion extends Activity implements Parcelable{
 							resTexto = "modificado";
 							resTexto2 = "modificar";
 							ActivityAgregarReceta.presentacion = presD;
+							ActivityVerEditarReceta.presentacion = presD;
 							break;
 						}
                 	   //verificar error
                 	   if(res >= 0){
                 		   wantToCloseDialog = true;
-                		   Toast.makeText(ctx, "Presentaci贸n "+ resTexto+" con 茅xito", Toast.LENGTH_LONG).show();
+                		   Toast.makeText(ctx, "Presentaci髇 "+ resTexto+" con 閤ito", Toast.LENGTH_LONG).show();
                 		   activity.finish();
                 		   //onResume();
                 	   }
                 	   else{
-                		   Toast.makeText(ctx, "No se pudo "+ resTexto2+ "la Presentaci贸n", Toast.LENGTH_LONG).show();
+                		   Toast.makeText(ctx, "No se pudo "+ resTexto2+ "la Presentaci髇", Toast.LENGTH_LONG).show();
                 		   activity.finish();
                 		   //onResume();
                 	   }
 	                   }else{
-	                	   tv_nuevoNombre.setError("Este espacio no puede estar vac铆o");
+	                	   tv_nuevoNombre.setError("Este espacio no puede estar vac韔");
 	                   }
 	                  if(wantToCloseDialog)
 	                      dialog.dismiss();
@@ -213,6 +215,7 @@ public class ActivityListPresentacion extends Activity implements Parcelable{
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			Presentacion pres = listaPresentacion.get(arg2);
 			ActivityAgregarReceta.presentacion = pres;
+			ActivityVerEditarReceta.presentacion = pres;
 			activity.finish();
 		}
 	};
@@ -257,14 +260,14 @@ public class ActivityListPresentacion extends Activity implements Parcelable{
 			case R.id.borrar_usuario_context:	
 				res = borrarPresentacion(index);
 				if(res>-1){
-					Toast.makeText(getApplicationContext(), "Presentaci贸n eliminada con 茅xito!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Presentaci髇 eliminada con 閤ito!", Toast.LENGTH_SHORT).show();
 				}
 				mode.finish();
 				return true;
 			case R.id.modificar_usuario_context:
 				res = modificarPresentacion(index);
 				if(res>-1){
-					Toast.makeText(getApplicationContext(), "Presentaci贸n modificada con 茅xito!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Presentaci髇 modificada con 閤ito!", Toast.LENGTH_SHORT).show();
 				}
 				mode.finish();
 				return true;
@@ -274,11 +277,11 @@ public class ActivityListPresentacion extends Activity implements Parcelable{
 	};
 	
 	/**
-	 * Funci贸n para borrar el paciente
+	 * Funci髇 para borrar el paciente
 	 * @param index
 	 */
 	private int borrarPresentacion(int index) {
-		//res = resultado de la operaci贸n-1 == error
+		//res = resultado de la operaci髇-1 == error
 		int res = -1;
 		Presentacion pres = listaPresentacion.get(index);							
 		res = core.EliminarPresentacion(pres, ctx);
@@ -294,7 +297,7 @@ public class ActivityListPresentacion extends Activity implements Parcelable{
 	
 
 	private int modificarPresentacion(int index) {
-		//res = resultado de la operaci贸n-1 == error
+		//res = resultado de la operaci髇-1 == error
 		int res = -1;
 		Presentacion pres = listaPresentacion.get(index);
 		AlertDialog newUser = onCreateDialog(saved,2,pres);

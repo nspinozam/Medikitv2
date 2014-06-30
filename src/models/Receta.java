@@ -1,9 +1,8 @@
 package models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
-public class Receta implements Parcelable{
+public class Receta implements Serializable{
 
 	public int idUsuario;
 	public int idMedicina;
@@ -15,6 +14,11 @@ public class Receta implements Parcelable{
 	public int cadaDias;
 	public int vecesDia;
 	public String nota;
+	/////////Cuando se crea la receta para la notificación////////////////
+	public String nombreMedicina;
+	public String nombreConsumo;
+	public String nombrePaciente;
+	public int idReceta;
 	
 	public Receta(int idUsuario, int idMedicina, int cantidadConsumo,int idTipoConsumo, String fechaI,
 			String HoraI, int duracionDias, int cadaDias,int vecesDia,String nota) {
@@ -30,21 +34,19 @@ public class Receta implements Parcelable{
 		this.nota = nota;
 	}
 	
+	public Receta(int idReceta, String fechaI, int duracionDias, String nombreConsumo, String nombrePaciente, int cantidadConsumo, String nombreMedicina) {
+		this.idReceta = idReceta;
+		this.fechaI = fechaI;
+		this.nombreMedicina = nombreMedicina;
+		this.duracionDias = duracionDias;
+		this.nombreConsumo = nombreConsumo;
+		this.nombrePaciente = nombrePaciente;
+		this.cantidadConsumo = cantidadConsumo;
+	}
+	
 	@Override
 	public String toString(){
 		return "";
-	}
-
-	@Override
-	public int describeContents() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

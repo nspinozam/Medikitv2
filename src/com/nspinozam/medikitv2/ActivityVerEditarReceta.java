@@ -50,7 +50,7 @@ import android.widget.Toast;
 
 //TODO Si se cambia la orientación se "borran" los datos
 
-public class ActivityAgregarReceta extends Activity{
+public class ActivityVerEditarReceta extends Activity{
 	Button btn_nombre;
 	Button btn_presentacion;
 	Button btn_horaI;
@@ -68,8 +68,9 @@ public class ActivityAgregarReceta extends Activity{
 	Context ctx;
 	PendingIntent pendingIntent;
 	Utilities U = new Utilities();
-	long idReceta = 0;
 	ArrayList idHoras = new ArrayList();
+	long idReceta = 0;
+	int accion = 0;
 	private Core core = new Core();
 	private ArrayList horasReceta  = new ArrayList();;
 	public Bundle saved;
@@ -85,10 +86,13 @@ public class ActivityAgregarReceta extends Activity{
 		setContentView(R.layout.activity_agregar_receta_n);
 		this.getWindow().setSoftInputMode(
 			    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		Intent i = getIntent();
 		activity = this;
 		saved = savedInstanceState;
 		//TODO probar con medicamento=null, para quitar que cuando se va acrear uno nuevo, le salga el último por defecto
 		ctx = this;
+		idReceta = i.getLongExtra("idReceta", 9999);
+		accion = i.getIntExtra("accion", 0);
 		//Elementos de UI
         btn_nombre = (Button)findViewById(R.id.btn_n);
         btn_presentacion = (Button)findViewById(R.id.btn_presentacion);
@@ -99,15 +103,41 @@ public class ActivityAgregarReceta extends Activity{
         et_nota = (EditText)findViewById(R.id.et_nota);
         et_duracion = (EditText)findViewById(R.id.et_cantidad_tiempo);
         cantidad_dosis = (EditText)findViewById(R.id.et_cantidad);
-        
-        btn_nombre.setOnClickListener(ocNombre);
-        btn_presentacion.setOnClickListener(ocPresentacion);
-        btn_fechaI.setOnClickListener(ocFecha);
-        btn_horaI.setOnClickListener(ocHora);
+        receta = core.obtenerReceta((int)idReceta, ctx);
+        if(accion == 1) {
+        	btn_nombre.setOnClickListener(ocNombre);
+        	btn_presentacion.setOnClickListener(ocPresentacion);
+        	btn_fechaI.setOnClickListener(ocFecha);
+        	btn_horaI.setOnClickListener(ocHora);
+        	setearValores();
+        }else {
+        	et_cantidad_dias.setEnabled(false);
+        	et_veces_dia.setEnabled(false);
+        	et_duracion.setEnabled(false);
+        	et_nota.setEnabled(false);
+        	cantidad_dosis.setEnabled(false);
+        	setearValores();
+        }
        
 		
 	}
 	
+	private void setearValores() {
+		receta.idReceta = (int)idReceta;
+		medicamento = core.obtenerMedicamento(receta.idMedicina, ctx);
+		presentacion = core.obtenerPresentacion(receta.idTipoConsumo, ctx);
+		btn_nombre.setText(medicamento.nombreComercial +" / "+medicamento.nombreGenerico);
+    	btn_presentacion.setText(presentacion.nombrePresentacion);
+    	btn_fechaI.setText(receta.fechaI);
+    	String horaI = core.obtenerHoraI((int)idReceta, ctx);
+    	btn_horaI.setText(horaI);
+    	et_cantidad_dias.setText(String.valueOf(receta.duracionDias));
+    	et_veces_dia.setText(String.valueOf(receta.vecesDia));
+    	et_duracion.setText(String.valueOf(receta.duracionDias));
+    	et_nota.setText(receta.nota);
+    	cantidad_dosis.setText(String.valueOf(receta.cantidadConsumo));
+	}
+
 	@Override
 	public void onResume(){
 		super.onResume();
@@ -134,13 +164,13 @@ public class ActivityAgregarReceta extends Activity{
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-		if (id == R.id.save_receta) {
+		if (id == R.id.save_receta && accion == 1) {
 			int ok = validarNulos();
 			if(ok == 0){}
 			else if(ok==1){
-				Toast.makeText(ctx, "La duración no puede ser menor al lapso de tiempo", Toast.LENGTH_LONG).show();
+				Toast.makeText(ctx, "La duraci�n no puede ser menor al lapso de tiempo", Toast.LENGTH_LONG).show();
 			} else{
-				Toast.makeText(ctx, "No se permiten espacios vacíos", Toast.LENGTH_LONG).show();
+				Toast.makeText(ctx, "No se permiten espacios vac�os", Toast.LENGTH_LONG).show();
 			}
 			return true;
 		}
@@ -348,7 +378,7 @@ public class ActivityAgregarReceta extends Activity{
 		}
 	    //Se construye el Dialog
 	    final AlertDialog dialog = builder.create();
-	    dialog.setTitle("Define las horas de notificaci�n");
+	    dialog.setTitle("Define las horas de notificación");
 	    dialog.show();
 	    // Se sobre escribe la acción del onclick para mantener el Dialog si hay error
 	    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
@@ -368,14 +398,13 @@ public class ActivityAgregarReceta extends Activity{
 	                      agregarDB();
 	                      Calendar recipe_calendar = Calendar.getInstance();
 	                      Log.i("horasReceta", horasReceta.toString());
-	                      Log.i("horasId", idHoras.toString());
 	                      for (int i = 0; i < horasReceta.size(); i++) {
 	                    	  recipe_calendar = configurarHorasN(recipe_calendar, (ArrayList)horasReceta.get(i));
-		                      Intent myIntent = new Intent(ActivityAgregarReceta.this, MyReceiver.class);
+		                      Intent myIntent = new Intent(ActivityVerEditarReceta.this, MyReceiver.class);
 		          		      myIntent.putExtra("Receta", receta);
 		          		      long idH = (Long) idHoras.get(i);
 		          		      myIntent.putExtra("idNotificacion", (int)idH);
-		          			  pendingIntent = PendingIntent.getBroadcast(ActivityAgregarReceta.this, (int)idH , myIntent, PendingIntent.FLAG_ONE_SHOT);
+		          			  pendingIntent = PendingIntent.getBroadcast(ActivityVerEditarReceta.this, (int)idH , myIntent, PendingIntent.FLAG_ONE_SHOT);
 		          		      AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 		          		      alarmManager.set(AlarmManager.RTC, recipe_calendar.getTimeInMillis(), pendingIntent);
 						}
@@ -415,7 +444,9 @@ public class ActivityAgregarReceta extends Activity{
 	}
 	
 	public void agregarDB(){
-		idReceta = core.agregarReceta(receta, ctx);
+		receta.idReceta = (int)idReceta;
+		core.ActualizarReceta(receta, ctx);
+		core.EliminarHorarios((int)idReceta, ctx);
 		idHoras = core.agregarHorarios(idReceta, horasReceta, ctx);
 		String nombreConsumo = core.consultarNombreC(receta.idTipoConsumo, ctx);
 		String nombrePaciente = core.consultarNombreP(receta.idUsuario, ctx);

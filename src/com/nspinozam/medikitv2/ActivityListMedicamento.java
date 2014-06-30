@@ -117,7 +117,7 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 		    tv_nuevoNombreGenerico.setText(medD.nombreGenerico);
 	    }
 	    
-	    // Se sobre escribe la acci贸n del onclick para mantener el Dialog si hay error
+	    // Se sobre escribe la acci髇 del onclick para mantener el Dialog si hay error
 	    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
 	          {            
 	              @Override
@@ -125,7 +125,7 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 	              {
 	                  Boolean wantToCloseDialog = false;
 	                //TODO Agregar un hilo
-	                  //Acci贸n del bot贸n aceptar
+	                  //Acci髇 del bot髇 aceptar
 	            	  
 	                  tv_nuevoNombreComercial.addTextChangedListener(new TextWatcher() {
 	            		    @Override
@@ -174,6 +174,7 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 							resTexto = "agregado";
 							resTexto2 = "agregar";
 							ActivityAgregarReceta.medicamento = medic;
+							ActivityVerEditarReceta.medicamento = medic;
 							break;
 						case 2:
 							medD.nombreComercial=nombreComercial;
@@ -182,12 +183,13 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 							resTexto = "modificado";
 							resTexto2 = "modificar";
 							ActivityAgregarReceta.medicamento = medD;
+							ActivityVerEditarReceta.medicamento = medD;
 							break;
 						}
                 	   //verificar error
                 	   if(res >= 0){
                 		   wantToCloseDialog = true;
-                		   Toast.makeText(ctx, "Medicamento "+ resTexto+" con 茅xito", Toast.LENGTH_LONG).show();
+                		   Toast.makeText(ctx, "Medicamento "+ resTexto+" con 閤ito", Toast.LENGTH_LONG).show();
                 		   activity.finish();
                 		   //onResume();
                 	   }
@@ -197,8 +199,8 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
                 		   //onResume();
                 	   }
 	                   }else{
-	                	   tv_nuevoNombreComercial.setError("Este espacio no puede estar vac铆o");
-	                	   tv_nuevoNombreGenerico.setError("Este espacio no puede estar vac铆o");
+	                	   tv_nuevoNombreComercial.setError("Este espacio no puede estar vac韔");
+	                	   tv_nuevoNombreGenerico.setError("Este espacio no puede estar vac韔");
 	                   }
 	                  if(wantToCloseDialog)
 	                      dialog.dismiss();
@@ -229,6 +231,7 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			Medicamento med = listaMedicamentos.get(arg2);
 			ActivityAgregarReceta.medicamento = med;
+			ActivityVerEditarReceta.medicamento = med;
 			activity.finish();
 		}
 	};
@@ -273,14 +276,14 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 			case R.id.borrar_usuario_context:	
 				res = borrarUsuario(index);
 				if(res>-1){
-					Toast.makeText(getApplicationContext(), "Medicamento eliminado con 茅xito!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Medicamento eliminado con 閤ito!", Toast.LENGTH_SHORT).show();
 				}
 				mode.finish();
 				return true;
 			case R.id.modificar_usuario_context:
 				res = modificarUsuario(index);
 				if(res>-1){
-					Toast.makeText(getApplicationContext(), "Medicamento modificado con 茅xito!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Medicamento modificado con 閤ito!", Toast.LENGTH_SHORT).show();
 				}
 				mode.finish();
 				return true;
@@ -290,11 +293,11 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 	};
 	
 	/**
-	 * Funci贸n para borrar el paciente
+	 * Funci髇 para borrar el paciente
 	 * @param index
 	 */
 	private int borrarUsuario(int index) {
-		//res = resultado de la operaci贸n-1 == error
+		//res = resultado de la operaci髇-1 == error
 		int res = -1;
 		Medicamento med = listaMedicamentos.get(index);							
 		res = core.EliminarMedicamento(med, ctx);
@@ -310,7 +313,7 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 	
 
 	private int modificarUsuario(int index) {
-		//res = resultado de la operaci贸n-1 == error
+		//res = resultado de la operaci髇-1 == error
 		int res = -1;
 		Medicamento usuario = listaMedicamentos.get(index);
 		AlertDialog newUser = onCreateDialog(saved,2,usuario);

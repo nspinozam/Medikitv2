@@ -71,14 +71,16 @@ public class Core {
 	/**
 	 * Funcion para actualizar un usuario
 	 */
-	public int EliminarUsuario(Usuario user, Context context){
+	public int EliminarUsuario(int user, Context context){
 		int res = 0;
 		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
 		SQLiteDatabase db = rdb.getWritableDatabase();
-		String[] whereArgs = new String[]{String.valueOf(user.idUsuario)};
+		ContentValues values = new ContentValues();
+		values.put("uEstado",1);
+		String[] whereArgs = new String[]{String.valueOf(user)};
 		if(db!=null){
 			try{
-				db.delete("Usuario","idUser=?", whereArgs);
+				db.update("Usuario", values, "idUser=?", whereArgs);
 				res = 1;
 			}catch(SQLException e){
 				return -1;
@@ -142,10 +144,12 @@ public class Core {
 		int res = 0;
 		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
 		SQLiteDatabase db = rdb.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("mEstado",1);
 		String[] whereArgs = new String[]{String.valueOf(medicamento.idMedicamento)};
 		if(db!=null){
 			try{
-				db.delete("Medicamento", "idMedicamento=?", whereArgs);
+				db.update("Medicamento", values, "idMedicamento=?", whereArgs);
 				res = 1;
 			}catch(SQLException e){
 				return -1;
@@ -209,10 +213,12 @@ public class Core {
 		int res = 0;
 		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
 		SQLiteDatabase db = rdb.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("pEstado",1);
 		String[] whereArgs = new String[]{String.valueOf(presentacion.idPresentacion)};
 		if(db!=null){
 			try{
-				db.delete("Presentacion", "idPresentacion=?", whereArgs);
+				db.update("Presentacion",values, "idPresentacion=?", whereArgs);
 				res = 1;
 			}catch(SQLException e){
 				return -1;
@@ -252,6 +258,54 @@ public class Core {
 		db.close();
 		return id;
 	}
+	
+	public int ActualizarReceta(Receta receta, Context context){
+		int res = 0;
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getWritableDatabase();
+		ContentValues nuevoRegistro = new ContentValues();
+		nuevoRegistro.put("idUsuario", receta.idUsuario);
+		nuevoRegistro.put("idMedicina", receta.idMedicina);
+		nuevoRegistro.put("cantidadConsumo", receta.cantidadConsumo);
+		nuevoRegistro.put("idTipoConsumo", receta.idTipoConsumo);
+		nuevoRegistro.put("fechaI", receta.fechaI);
+		nuevoRegistro.put("duracionDias", receta.duracionDias);
+		nuevoRegistro.put("cadaDias", receta.cadaDias);
+		nuevoRegistro.put("vecesDia", receta.vecesDia);
+		nuevoRegistro.put("nota", receta.nota);
+		String[] whereArgs = new String[]{String.valueOf(receta.idReceta)};
+		if(db!=null){
+			try{
+				db.update("Receta", nuevoRegistro, "idReceta=?", whereArgs);
+				res = 1;
+			}catch(SQLException e){
+				return -1;
+			}
+		}
+		return res;
+	}
+	
+	/**
+	 * Funci�n para eliminar las presentaciones
+	 */
+	public int EliminarReceta(int receta, Context context){
+		int res = 0;
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("rEstado",1);
+		String[] whereArgs = new String[]{String.valueOf(receta)};
+		if(db!=null){
+			try{
+				db.update("Receta",values, "idReceta=?", whereArgs);
+				//db.delete("Receta", "idReceta=?", whereArgs);
+				res = 1;
+			}catch(SQLException e){
+				return -1;
+			}
+		}
+		return res;
+	}
 	/**
 	 * Funcion para agregar los horarios a la base de datos
 	 * @param idReceta identificador de la receta.
@@ -261,27 +315,135 @@ public class Core {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public long agregarHorarios(long idReceta,ArrayList horarios, Context context){
-		long id = 0;
+	public ArrayList agregarHorarios(long idReceta,ArrayList horarios, Context context){
+		ArrayList id = new ArrayList();
 		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
 		SQLiteDatabase db = rdb.getWritableDatabase();
 		if (db != null) {
 			try {
 				for (int i = 0; i < horarios.size(); i++) {
+					long idl = 0;
 					ArrayList contenedor = (ArrayList) horarios.get(i);
 					ContentValues nuevoRegistro = new ContentValues();
 					nuevoRegistro.put("idReceta", idReceta);
 					nuevoRegistro.put("hora", contenedor.get(1).toString());
-					id = db.insert("Hour", null, nuevoRegistro);
+					idl = db.insert("Hour", null, nuevoRegistro);
+					id.add(idl);
 				}
 				
 			} catch (SQLException e) {
 				//retorno el error
-				return -1;
+				return null;
 			}
 		}
 		db.close();
 		return id;
+	}
+	
+	public int EliminarHorarios(int receta, Context context){
+		int res = 0;
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getWritableDatabase();
+		String[] whereArgs = new String[]{String.valueOf(receta)};
+		if(db!=null){
+			try{
+				db.delete("Hour", "idReceta=?", whereArgs);
+				res = 1;
+			}catch(SQLException e){
+				return -1;
+			}
+		}
+		return res;
+	}
+	/*public int ActualizarHorarios(long idReceta,ArrayList horarios, Context context){
+		int res = 0;
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getWritableDatabase();
+		ContentValues nuevoRegistro = new ContentValues();
+		nuevoRegistro.put("idReceta", idReceta);
+		nuevoRegistro.put("hora", contenedor.get(1).toString());
+		String[] whereArgs = new String[]{String.valueOf(idReceta)};
+		if(db!=null){
+			try{
+				db.update("Receta", nuevoRegistro, "idReceta=?", whereArgs);
+				res = 1;
+			}catch(SQLException e){
+				return -1;
+			}
+		}
+		return res;
+	}*/
+	
+	public Receta obtenerReceta(int id,Context context) {
+		Receta receta = null;
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getReadableDatabase();
+
+		if (db != null) {
+			Cursor query = db.rawQuery("SELECT idUsuario, idMedicina,cantidadConsumo,idTipoConsumo," +
+					"fechaI,duracionDias,cadaDias,vecesDia,nota FROM Receta "
+					+ "WHERE Receta.idReceta = "+id,null);
+			if (query.moveToFirst()) {
+				do {
+					receta = new Receta(query.getInt(0), query.getInt(1), query.getInt(2), query.getInt(3), 
+							query.getString(4), null, query.getInt(5), query.getInt(6), query.getInt(7), query.getString(8));
+				} while (query.moveToNext());
+			}
+		}
+		db.close();
+		return receta;
+	}
+	
+	public Medicamento obtenerMedicamento(int id,Context context) {
+		Medicamento receta = null;
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getReadableDatabase();
+
+		if (db != null) {
+			Cursor query = db.rawQuery("SELECT nombreComercial, nombreGenerico FROM Medicamento "
+					+ "WHERE Medicamento.idMedicamento = "+id,null);
+			if (query.moveToFirst()) {
+				do {
+					receta = new Medicamento(id, query.getString(0), query.getString(1));
+				} while (query.moveToNext());
+			}
+		}
+		db.close();
+		return receta;
+	}
+	
+	public Presentacion obtenerPresentacion(int id,Context context) {
+		Presentacion receta = null;
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getReadableDatabase();
+
+		if (db != null) {
+			Cursor query = db.rawQuery("SELECT nombrePresentacion, notaPresentacion FROM Presentacion "
+					+ "WHERE Presentacion.idPresentacion = "+id,null);
+			if (query.moveToFirst()) {
+				do {
+					receta = new Presentacion(id, query.getString(0), query.getString(1));
+				} while (query.moveToNext());
+			}
+		}
+		db.close();
+		return receta;
+	}
+	
+	public String obtenerHoraI(int id,Context context) {
+		String hora = "";
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getReadableDatabase();
+
+		if (db != null) {
+			Cursor query = db.rawQuery("SELECT hora FROM Hour "
+					+ "WHERE Hour.idReceta = "+id,null);
+			if (query.moveToFirst()) {
+				hora = query.getString(0);
+			}
+		}
+		db.close();
+		return hora;
 	}
 	
 	/**
@@ -297,7 +459,8 @@ public class Core {
 
 		if (db != null) {
 			String[] fields = new String[] { "idUser", "nombre"};
-			Cursor query = db.query("Usuario", fields, null, null, null, null,
+			String[] whereArgs = new String[]{"0"};
+			Cursor query = db.query("Usuario", fields, "uEstado=?", whereArgs, null, null,
 					null);
 			if (query.moveToFirst()) {
 				do {
@@ -321,7 +484,8 @@ public class Core {
 
 		if (db != null) {
 			String[] fields = new String[] { "idMedicamento", "nombreComercial" ,"nombreGenerico"};
-			Cursor query = db.query("Medicamento", fields, null, null, null, null,
+			String[] whereArgs = new String[]{"0"};
+			Cursor query = db.query("Medicamento", fields, "mEstado=?", whereArgs, null, null,
 					null);
 			if (query.moveToFirst()) {
 				do {
@@ -343,8 +507,9 @@ public class Core {
 		SQLiteDatabase db = rdb.getReadableDatabase();
 
 		if (db != null) {
+			String[] whereArgs = new String[]{"0"};
 			String[] fields = new String[] { "idPresentacion", "nombrePresentacion" ,"notaPresentacion"};
-			Cursor query = db.query("Presentacion", fields, null, null, null, null,
+			Cursor query = db.query("Presentacion", fields,"pEstado=?", whereArgs, null, null,
 					null);
 			if (query.moveToFirst()) {
 				do {
@@ -368,7 +533,8 @@ public class Core {
 		if (db != null) {
 			//String[] fields = new String[] { "idPresentacion", "nombrePresentacion" ,"notaPresentacion"};
 			Cursor query = db.rawQuery("SELECT idReceta, cantidadConsumo,nombrePresentacion, nombreComercial FROM Receta, Medicamento, Presentacion "
-					+ "WHERE Receta.idTipoConsumo = Presentacion.idPresentacion AND Receta.idMedicina = Medicamento.idMedicamento AND Receta.idUsuario = "+id,null);
+					+ "WHERE Receta.idTipoConsumo = Presentacion.idPresentacion AND Receta.idMedicina = Medicamento.idMedicamento" +
+					" AND Presentacion.pEstado = 0 AND Receta.rEstado = 0 AND Medicamento.mEstado = 0 AND Receta.idUsuario = "+id,null);
 			if (query.moveToFirst()) {
 				do {
 					ArrayList temp = new ArrayList();
@@ -383,5 +549,59 @@ public class Core {
 		db.close();
 		return listaPresentaciones;
 	}
+	
+	public String consultarNombreC(int id,Context context) {
+		String nombre = "";
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getReadableDatabase();
 
+		if (db != null) {
+			Cursor query = db.rawQuery("SELECT nombrePresentacion FROM Presentacion "
+					+ "WHERE Presentacion.idPresentacion = "+id,null);
+			if (query.moveToFirst()) {
+				do {
+					nombre = query.getString(0);
+				} while (query.moveToNext());
+			}
+		}
+		db.close();
+		return nombre;
+	}
+
+	public String consultarNombreP(int id,Context context) {
+		String nombre = "";
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getReadableDatabase();
+
+		if (db != null) {
+			Cursor query = db.rawQuery("SELECT nombre FROM Usuario "
+					+ "WHERE Usuario.idUser = "+id,null);
+			if (query.moveToFirst()) {
+				do {
+					nombre = query.getString(0);
+				} while (query.moveToNext());
+			}
+		}
+		db.close();
+		return nombre;
+	}
+	
+	public String consultarNombreM(int id,Context context) {
+		String nombre = "";
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getReadableDatabase();
+
+		if (db != null) {
+			Cursor query = db.rawQuery("SELECT nombreComercial FROM Medicamento "
+					+ "WHERE Medicamento.idMedicamento = "+id,null);
+			if (query.moveToFirst()) {
+				do {
+					nombre = query.getString(0);
+				} while (query.moveToNext());
+			}
+		}
+		db.close();
+		return nombre;
+	}
+	
 }

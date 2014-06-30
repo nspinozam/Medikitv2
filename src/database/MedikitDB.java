@@ -10,20 +10,20 @@ public class MedikitDB extends SQLiteOpenHelper {
 	/*private static final String RECIPE_SQL = "CREATE TABLE IF NOT EXISTS Recipe (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, patient TEXT, dosisStartTime TEXT, dosisPerDay INTEGER, dosisInterval INTEGER," +
 			"			 dosisAmount INTEGER, dosisType TEXT, duration INTEGER, durationType TEXT, fechaI TEXT, fechaF TEXT)";
 	*/
-	private static final String USER_SQL = "CREATE TABLE IF NOT EXISTS Usuario (idUser INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT UNIQUE)";
+	private static final String USER_SQL = "CREATE TABLE IF NOT EXISTS Usuario (idUser INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT UNIQUE, uEstado INTEGER DEFAULT 0)";
 	private static final String MEDICINE_SQL = "CREATE TABLE IF NOT EXISTS 	Medicamento (idMedicamento INTEGER PRIMARY KEY AUTOINCREMENT, nombreComercial TEXT UNIQUE, "
-			+ "nombreGenerico TEXT)";
+			+ "nombreGenerico TEXT, mEstado INTEGER DEFAULT 0)";
 	private static final String PRESENTATION_SQL = "CREATE TABLE IF NOT EXISTS Presentacion(idPresentacion INTEGER PRIMARY KEY AUTOINCREMENT, nombrePresentacion TEXT UNIQUE, "
-			+ "notaPresentacion TEXT)";
+			+ "notaPresentacion TEXT, pEstado INTEGER DEFAULT 0)";
 			
 	private static final String DROP_SQL = "DROP TABLE IF EXISTS User";
 	
 	private static final String RECIPE_SQL = "CREATE TABLE IF NOT EXISTS 	Receta (idReceta INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER, idMedicina INTEGER,"
-			+ " cantidadConsumo INTEGER, idTipoConsumo INTEGER, fechaI TEXT, duracionDias INTEGER, cadaDias INTEGER, vecesDia INTEGER, nota TEXT, "
+			+ " cantidadConsumo INTEGER, idTipoConsumo INTEGER, fechaI TEXT, duracionDias INTEGER, cadaDias INTEGER, vecesDia INTEGER, nota TEXT, rEstado INTEGER DEFAULT 0, "
 			+ "FOREIGN KEY(idUsuario) REFERENCES Usuario(idUser), FOREIGN KEY(idMedicina) REFERENCES Medicamento(idMedicamento), "
 			+ "FOREIGN KEY(idTipoConsumo) REFERENCES Presentacion(idPresentacion))";
 	
-	private static final String HOUR_SQL = "CREATE TABLE IF NOT EXISTS Hour (idReceta INTEGER, hora TEXT, FOREIGN KEY(idReceta) REFERENCES Receta(idReceta))";
+	private static final String HOUR_SQL = "CREATE TABLE IF NOT EXISTS Hour (idHora INTEGER PRIMARY KEY AUTOINCREMENT, idReceta INTEGER, hora TEXT, FOREIGN KEY(idReceta) REFERENCES Receta(idReceta))";
 	
 	public MedikitDB(Context context, String name, CursorFactory factory, int version) {
 		super(context, name, factory, version);
