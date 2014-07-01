@@ -168,9 +168,9 @@ public class ActivityVerEditarReceta extends Activity{
 			int ok = validarNulos();
 			if(ok == 0){}
 			else if(ok==1){
-				Toast.makeText(ctx, "La duraciï¿½n no puede ser menor al lapso de tiempo", Toast.LENGTH_LONG).show();
+				Toast.makeText(ctx, "La duración no puede ser menor al lapso de tiempo", Toast.LENGTH_LONG).show();
 			} else{
-				Toast.makeText(ctx, "No se permiten espacios vacï¿½os", Toast.LENGTH_LONG).show();
+				Toast.makeText(ctx, "No se permiten espacios vacíos", Toast.LENGTH_LONG).show();
 			}
 			return true;
 		}
@@ -378,7 +378,7 @@ public class ActivityVerEditarReceta extends Activity{
 		}
 	    //Se construye el Dialog
 	    final AlertDialog dialog = builder.create();
-	    dialog.setTitle("Define las horas de notificaciÃ³n");
+	    dialog.setTitle("Define las horas de notificación");
 	    dialog.show();
 	    // Se sobre escribe la acciÃ³n del onclick para mantener el Dialog si hay error
 	    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()

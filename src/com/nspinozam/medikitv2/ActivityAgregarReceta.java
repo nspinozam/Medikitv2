@@ -375,6 +375,7 @@ public class ActivityAgregarReceta extends Activity{
 		          		      myIntent.putExtra("Receta", receta);
 		          		      long idH = (Long) idHoras.get(i);
 		          		      myIntent.putExtra("idNotificacion", (int)idH);
+		          		      Log.i("Not agregada id:",String.valueOf(idH));
 		          			  pendingIntent = PendingIntent.getBroadcast(ActivityAgregarReceta.this, (int)idH , myIntent, PendingIntent.FLAG_ONE_SHOT);
 		          		      AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 		          		      alarmManager.set(AlarmManager.RTC, recipe_calendar.getTimeInMillis(), pendingIntent);

@@ -6,6 +6,7 @@ import models.Medicamento;
 import models.Receta;
 import models.Usuario;
 import database.Core;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -31,6 +32,7 @@ public class ActivityListMain extends Activity{
 	ListView list;
 	public static int id;
 	ActionMode mMode;
+	ActionBar actionBar;
 	int index = 0;
 	ArrayList<String> listaRecetasStr = new ArrayList<String>();
 	ArrayList listaRecetas = new ArrayList();//TODO revisar si hay que hacer una clase nueva para agregar las recetas o con la existente ya basta
@@ -43,18 +45,19 @@ public class ActivityListMain extends Activity{
 		ctx = this;
 		core = new Core();
 		activity = this;
+		actionBar = getActionBar();
 		ActivityListUser.BACK = true;
 		list = (ListView) findViewById(R.id.drugsListView); 
 		prefs = getSharedPreferences("MedikitPreferences",Context.MODE_PRIVATE);
 		id = prefs.getInt("IdUsuario", 9999);
-		Log.i("id",String.valueOf(id));
 		//Cargar lista de pacientes
 		listaRecetas = core.RecetaListInicial(id,ctx);
 		listaRecetasStr=crearArray(listaRecetas);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, listaRecetasStr);
 		list.setAdapter(adapter);
-		
+		String name = core.consultarNombreP(id, ctx);
+		actionBar.setTitle(name);
 		Log.i("listaRecetas", listaRecetas.toString());
 		Log.i("listaRecetasStr", listaRecetasStr.toString());
 	}

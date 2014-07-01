@@ -11,7 +11,6 @@ import models.Receta;
 import com.nspinozam.medikitv2.R;
 
 import database.Core;
-
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
@@ -53,7 +52,7 @@ public class NotificationResult extends Activity
 		Intent intent = getIntent();
 		receta = (Receta)intent.getExtras().getSerializable("Receta");
 		idNotificacion = intent.getExtras().getInt("idNotificacion");
-		
+		Log.i("Result idNotificacion send", String.valueOf(idNotificacion));
 		tv_infoPaciente.setText(receta.nombrePaciente);
 		tv_infoCantidad.setText(String.valueOf(receta.cantidadConsumo)+" "+receta.nombreConsumo);
 		tv_infoMedicina.setText(receta.nombreMedicina);
@@ -79,6 +78,7 @@ public class NotificationResult extends Activity
 					Intent myIntent = new Intent(NotificationResult.this, MyReceiver.class);
 				    myIntent.putExtra("Receta", receta);
 				    myIntent.putExtra("idNotificacion", idNotificacion);
+				    Log.i("Result idNotificacion send", String.valueOf(idNotificacion));
 					pendingIntent = PendingIntent.getBroadcast(NotificationResult.this, Integer.valueOf(receta.idReceta), myIntent,0);
 				    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 				    alarmManager.set(AlarmManager.RTC, timeInMillis, pendingIntent);
@@ -104,6 +104,7 @@ public class NotificationResult extends Activity
 				Intent myIntent = new Intent(NotificationResult.this, MyReceiver.class);
 			    myIntent.putExtra("Receta", receta);
 			    myIntent.putExtra("idNotificacion", idNotificacion);
+			    Log.i("Result idNotificacion send", String.valueOf(idNotificacion));
 				pendingIntent = PendingIntent.getBroadcast(NotificationResult.this, Integer.valueOf(idNotificacion), myIntent,0);
 			    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 			    alarmManager.set(AlarmManager.RTC, timeInMillis, pendingIntent);

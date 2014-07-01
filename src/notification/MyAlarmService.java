@@ -45,11 +45,12 @@ public class MyAlarmService extends Service {
     }
 
 
-   @SuppressLint("NewApi")
+   @SuppressWarnings("deprecation")
+@SuppressLint("NewApi")
 @Override
    public void onStart(Intent intent, int startId)
    {
-       super.onStart(intent, startId); 
+      // super.onStart(intent, startId); 
        String[] events = new String[3];
        events[0] = "Medication: ";
        events[1] = "Quantity: ";
@@ -57,6 +58,7 @@ public class MyAlarmService extends Service {
        try{
     	   receta = (Receta)intent.getExtras().getSerializable("Receta");;
     	   idNotificacion = intent.getExtras().getInt("idNotificacion");
+    	   Log.i("MyAlarm idNotificacion", String.valueOf(idNotificacion));
     	   events[0]+=receta.nombreMedicina;
     	   events[1]+=receta.cantidadConsumo+" "+receta.nombreConsumo;
     	   events[2]+=receta.nombrePaciente;
@@ -76,6 +78,7 @@ public class MyAlarmService extends Service {
        // Se action to window
        normal.putExtra("Receta", receta);
        normal.putExtra("idNotificacion", idNotificacion);
+       Log.i("MyAlarm idNotificacion send", String.valueOf(idNotificacion));
        //End Action in window
        PendingIntent pending = PendingIntent.getBroadcast(this, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
        PendingIntent pending2 = PendingIntent.getBroadcast(this, 1, intent2, PendingIntent.FLAG_UPDATE_CURRENT);// PendingIntent.FLAG_CANCEL_CURRENT
@@ -108,7 +111,10 @@ public class MyAlarmService extends Service {
 		NotificationManager mNotificationManager =
 		    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		// mId allows you to update the notification later on.
-		mNotificationManager.notify(idNotificacion, mBuilder.build());
+		if(idNotificacion!=0){
+			mNotificationManager.notify(idNotificacion, mBuilder.build());
+			Log.i("MyAlarm idNotificacion notify", String.valueOf(idNotificacion));
+		}
     }
 
     @Override
