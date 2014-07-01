@@ -135,12 +135,12 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 	            		    }
 	            		    @Override
 	            		    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-	            		    	tv_nuevoNombreComercial.setError(null);
+	            		    	if (tv_nuevoNombreComercial.getText().toString().length() <= 0)
+		            		    	tv_nuevoNombreComercial.setError("Agrega el nombre del Medicamento");
 	            		    }
 	            		    @Override
 	            		    public void afterTextChanged(Editable s) {
-	            		    if (tv_nuevoNombreComercial.getText().toString().length() <= 0)
-	            		    	tv_nuevoNombreComercial.setError("Agrega el nombre del Medicamento");
+		            		    tv_nuevoNombreComercial.setError(null);
 	            		    }
 	            		 });
 	                  
@@ -152,12 +152,12 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 	            		    }
 	            		    @Override
 	            		    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-	            		    	tv_nuevoNombreGenerico.setError(null);
+	            		    	if (tv_nuevoNombreGenerico.getText().toString().length() <= 0)
+		            		    	tv_nuevoNombreGenerico.setError("Agrega el nombre del Medicamento");
 	            		    }
 	            		    @Override
 	            		    public void afterTextChanged(Editable s) {
-	            		    if (tv_nuevoNombreGenerico.getText().toString().length() <= 0)
-	            		    	tv_nuevoNombreGenerico.setError("Agrega el nombre del Medicamento");
+		            		    tv_nuevoNombreGenerico.setError(null);
 	            		    }
 	            		 });
 	                  
@@ -201,8 +201,12 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
                 		   //onResume();
                 	   }
 	                   }else{
-	                	   tv_nuevoNombreComercial.setError("Este espacio no puede estar vacío");
-	                	   tv_nuevoNombreGenerico.setError("Este espacio no puede estar vacío");
+	                	   if(nombreComercial.equals("")){
+	                		   tv_nuevoNombreComercial.setError("Este espacio no puede estar vacío");
+	                	   }
+	                	   else if(nombreGenerico.equals("")){
+	                		   tv_nuevoNombreGenerico.setError("Este espacio no puede estar vacío");
+	                	   }
 	                   }
 	                  if(wantToCloseDialog)
 	                      dialog.dismiss();

@@ -104,8 +104,7 @@ public class ActivityAgregarReceta extends Activity{
         btn_presentacion.setOnClickListener(ocPresentacion);
         btn_fechaI.setOnClickListener(ocFecha);
         btn_horaI.setOnClickListener(ocHora);
-       
-		
+        
 	}
 	
 	@Override

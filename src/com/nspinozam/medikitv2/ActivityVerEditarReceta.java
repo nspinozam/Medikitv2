@@ -157,8 +157,13 @@ public class ActivityVerEditarReceta extends Activity{
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
-		getMenuInflater().inflate(R.menu.activity_agregar_receta, menu);
-		return true;
+		if(accion==1){
+			getMenuInflater().inflate(R.menu.activity_agregar_receta, menu);
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	
 	@Override
