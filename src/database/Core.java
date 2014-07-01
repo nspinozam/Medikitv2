@@ -535,15 +535,14 @@ public class Core {
 			Cursor query = db.rawQuery("SELECT idReceta, cantidadConsumo,nombrePresentacion, nombreComercial FROM Receta, Medicamento, Presentacion "
 					+ "WHERE Receta.idTipoConsumo = Presentacion.idPresentacion AND Receta.idMedicina = Medicamento.idMedicamento" +
 					" AND Presentacion.pEstado = 0 AND Receta.rEstado = 0 AND Medicamento.mEstado = 0 AND Receta.idUsuario = "+id,null);
-			if (query.moveToFirst()) {
-				do {
+			while(query.moveToNext()) {
+					Log.i("LLega a Core","prueba");
 					ArrayList temp = new ArrayList();
 					temp.add(query.getInt(0));
 					temp.add(query.getInt(1));
 					temp.add(query.getString(2));
 					temp.add(query.getString(3));
 					listaPresentaciones.add(temp);
-				} while (query.moveToNext());
 			}
 		}
 		db.close();

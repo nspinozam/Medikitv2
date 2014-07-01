@@ -55,7 +55,7 @@ public class MyAlarmService extends Service {
        events[1] = "Quantity: ";
        events[2] = "Patient: ";
        try{
-    	   receta = (Receta) intent.getExtras().getSerializable("Receta");
+    	   receta = (Receta)intent.getExtras().getSerializable("Receta");;
     	   idNotificacion = intent.getExtras().getInt("idNotificacion");
     	   events[0]+=receta.nombreMedicina;
     	   events[1]+=receta.cantidadConsumo+" "+receta.nombreConsumo;

@@ -158,6 +158,7 @@ public class ActivityListPresentacion extends Activity implements Parcelable{
 		                	res = core.agregarPresentacion(pres, ctx);
 							resTexto = "agregada";
 							resTexto2 = "agregar";
+							pres.idPresentacion = (int)res;
 							ActivityAgregarReceta.presentacion = pres;
 							ActivityVerEditarReceta.presentacion = pres;
 							break;

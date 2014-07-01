@@ -26,7 +26,7 @@ public class NotificationButtonAction extends BroadcastReceiver {
 	 Core insCore = new Core();
 	@Override
 	 public void onReceive(Context context, Intent intent) {
-		receta = (Receta) intent.getExtras().getSerializable("Receta");
+		receta = (Receta)intent.getExtras().getSerializable("Receta");
 		idNotificacion = intent.getExtras().getInt("idNotificacion");
 		ctx = context;
 		String tipo = intent.getType();
@@ -58,7 +58,7 @@ public class NotificationButtonAction extends BroadcastReceiver {
 			}
 			//borar de la DB
 			else {
-				//insCore.deleteRecipe(ctx, id);
+				insCore.EliminarReceta(receta.idReceta, ctx);
 			}
 			Log.i("Notif Status", "tomado");
 			

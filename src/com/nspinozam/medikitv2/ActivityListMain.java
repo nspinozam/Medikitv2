@@ -54,6 +54,9 @@ public class ActivityListMain extends Activity{
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, listaRecetasStr);
 		list.setAdapter(adapter);
+		
+		Log.i("listaRecetas", listaRecetas.toString());
+		Log.i("listaRecetasStr", listaRecetasStr.toString());
 	}
 	
 	private ArrayList<String> crearArray(ArrayList lista) {
@@ -101,6 +104,8 @@ public class ActivityListMain extends Activity{
 		
 		listaRecetas = core.RecetaListInicial(id,ctx);
 		listaRecetasStr=crearArray(listaRecetas);
+		Log.i("listaRecetas", listaRecetas.toString());
+		Log.i("listaRecetasStr", listaRecetasStr.toString());
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, listaRecetasStr);
 		list.setAdapter(adapter);

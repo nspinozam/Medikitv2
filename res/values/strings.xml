@@ -3,6 +3,7 @@
 
     <string name="app_name">Medikit</string>
     <string name="label_usuarios">Usuarios</string>
+     <string name="label_edicion_receta">Edición de Receta</string>
     <string name="label_medicamentos">Medicamentos</string>
     <string name="label_agregar_receta">Agregar Receta</string>
     <string name="label_presentacion">Presentaciones</string>

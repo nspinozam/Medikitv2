@@ -397,7 +397,7 @@ public class ActivityVerEditarReceta extends Activity{
 	                	  horasReceta = array;
 	                      agregarDB();
 	                      Calendar recipe_calendar = Calendar.getInstance();
-	                      Log.i("horasReceta", horasReceta.toString());
+	                      receta.nombreMedicina = medicamento.nombreComercial;
 	                      for (int i = 0; i < horasReceta.size(); i++) {
 	                    	  recipe_calendar = configurarHorasN(recipe_calendar, (ArrayList)horasReceta.get(i));
 		                      Intent myIntent = new Intent(ActivityVerEditarReceta.this, MyReceiver.class);

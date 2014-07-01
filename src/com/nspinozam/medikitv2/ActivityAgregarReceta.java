@@ -348,7 +348,7 @@ public class ActivityAgregarReceta extends Activity{
 		}
 	    //Se construye el Dialog
 	    final AlertDialog dialog = builder.create();
-	    dialog.setTitle("Define las horas de notificaci�n");
+	    dialog.setTitle("Define las horas de notificación");
 	    dialog.show();
 	    // Se sobre escribe la acción del onclick para mantener el Dialog si hay error
 	    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
@@ -367,9 +367,9 @@ public class ActivityAgregarReceta extends Activity{
 	                	  horasReceta = array;
 	                      agregarDB();
 	                      Calendar recipe_calendar = Calendar.getInstance();
-	                      Log.i("horasReceta", horasReceta.toString());
-	                      Log.i("horasId", idHoras.toString());
+	                      receta.nombreMedicina = medicamento.nombreComercial;
 	                      for (int i = 0; i < horasReceta.size(); i++) {
+	                    	  Log.i("For agregar", "el i = "+i);
 	                    	  recipe_calendar = configurarHorasN(recipe_calendar, (ArrayList)horasReceta.get(i));
 		                      Intent myIntent = new Intent(ActivityAgregarReceta.this, MyReceiver.class);
 		          		      myIntent.putExtra("Receta", receta);

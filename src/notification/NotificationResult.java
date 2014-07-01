@@ -51,7 +51,7 @@ public class NotificationResult extends Activity
 		TextView tv_infoCantidad = (TextView)findViewById(R.id.quantity_info);
 		// Get Intent data
 		Intent intent = getIntent();
-		receta = (Receta) intent.getExtras().getSerializable("Receta");
+		receta = (Receta)intent.getExtras().getSerializable("Receta");
 		idNotificacion = intent.getExtras().getInt("idNotificacion");
 		
 		tv_infoPaciente.setText(receta.nombrePaciente);
@@ -86,7 +86,7 @@ public class NotificationResult extends Activity
 				}
 				//borar DB
 				else {
-					//insCore.deleteRecipe(ctx, id);
+					insCore.EliminarReceta(receta.idReceta, ctx);
 					finish();
 				}
 			}

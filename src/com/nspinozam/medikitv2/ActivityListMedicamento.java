@@ -173,6 +173,7 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 		                	res = core.agregarMedicamento(medic, ctx);
 							resTexto = "agregado";
 							resTexto2 = "agregar";
+							medic.idMedicamento = (int)res;
 							ActivityAgregarReceta.medicamento = medic;
 							ActivityVerEditarReceta.medicamento = medic;
 							break;
@@ -182,6 +183,7 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 							res = core.ActualizarMedicamento(medD, ctx);
 							resTexto = "modificado";
 							resTexto2 = "modificar";
+							//medD.idMedicamento = (int)res;
 							ActivityAgregarReceta.medicamento = medD;
 							ActivityVerEditarReceta.medicamento = medD;
 							break;
