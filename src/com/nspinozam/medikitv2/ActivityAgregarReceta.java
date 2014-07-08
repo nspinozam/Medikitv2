@@ -137,9 +137,9 @@ public class ActivityAgregarReceta extends Activity{
 			int ok = validarNulos();
 			if(ok == 0){}
 			else if(ok==1){
-				Toast.makeText(ctx, "La duraci√≥n no puede ser menor al lapso de tiempo", Toast.LENGTH_LONG).show();
+				Toast.makeText(ctx, "La duraciÛn no puede ser menor al lapso de tiempo", Toast.LENGTH_LONG).show();
 			} else{
-				Toast.makeText(ctx, "No se permiten espacios vac√≠os", Toast.LENGTH_LONG).show();
+				Toast.makeText(ctx, "No se permiten espacios vacÌos", Toast.LENGTH_LONG).show();
 			}
 			return true;
 		}
@@ -195,6 +195,7 @@ public class ActivityAgregarReceta extends Activity{
 				&& !et_veces_dia.getText().toString().equals("") && !et_duracion.getText().toString().equals("")){
 			int cantidadConsumo = Integer.valueOf(cantidad_dosis.getText().toString());
 			String fechaI = btn_fechaI.getText().toString();
+			Log.i("fechaI", fechaI);
 			String HoraI = btn_horaI.getText().toString();
 			int duracionDias = Integer.valueOf(et_duracion.getText().toString());
 			int cadaDias = Integer.valueOf(et_cantidad_dias.getText().toString());
@@ -347,7 +348,7 @@ public class ActivityAgregarReceta extends Activity{
 		}
 	    //Se construye el Dialog
 	    final AlertDialog dialog = builder.create();
-	    dialog.setTitle("Define las horas de notificaci√≥n");
+	    dialog.setTitle("Define las horas de notificaciÛn");
 	    dialog.show();
 	    // Se sobre escribe la acci√≥n del onclick para mantener el Dialog si hay error
 	    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
@@ -368,13 +369,11 @@ public class ActivityAgregarReceta extends Activity{
 	                      Calendar recipe_calendar = Calendar.getInstance();
 	                      receta.nombreMedicina = medicamento.nombreComercial;
 	                      for (int i = 0; i < horasReceta.size(); i++) {
-	                    	  Log.i("For agregar", "el i = "+i);
 	                    	  recipe_calendar = configurarHorasN(recipe_calendar, (ArrayList)horasReceta.get(i));
 		                      Intent myIntent = new Intent(ActivityAgregarReceta.this, MyReceiver.class);
 		          		      myIntent.putExtra("Receta", receta);
 		          		      long idH = (Long) idHoras.get(i);
 		          		      myIntent.putExtra("idNotificacion", (int)idH);
-		          		      Log.i("Not agregada id:",String.valueOf(idH));
 		          			  pendingIntent = PendingIntent.getBroadcast(ActivityAgregarReceta.this, (int)idH , myIntent, PendingIntent.FLAG_ONE_SHOT);
 		          		      AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 		          		      alarmManager.set(AlarmManager.RTC, recipe_calendar.getTimeInMillis(), pendingIntent);

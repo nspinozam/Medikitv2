@@ -52,7 +52,6 @@ public class NotificationResult extends Activity
 		Intent intent = getIntent();
 		receta = (Receta)intent.getExtras().getSerializable("Receta");
 		idNotificacion = intent.getExtras().getInt("idNotificacion");
-		Log.i("Result idNotificacion send", String.valueOf(idNotificacion));
 		tv_infoPaciente.setText(receta.nombrePaciente);
 		tv_infoCantidad.setText(String.valueOf(receta.cantidadConsumo)+" "+receta.nombreConsumo);
 		tv_infoMedicina.setText(receta.nombreMedicina);
@@ -68,12 +67,10 @@ public class NotificationResult extends Activity
 				try {
 					finish_date.setTime(sdf.parse(receta.fechaI));
 					finish_date.add(Calendar.DATE, receta.duracionDias);
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
+				} catch (ParseException e) {}
 				Calendar today = Calendar.getInstance();
 				//Si la fecha de fin no ha terminado
-				if(finish_date.compareTo(today)==-1) {
+				if(finish_date.compareTo(today)==1) {
 					long timeInMillis = today.getTimeInMillis()+MILLISPARADIA;
 					Intent myIntent = new Intent(NotificationResult.this, MyReceiver.class);
 				    myIntent.putExtra("Receta", receta);
@@ -87,6 +84,7 @@ public class NotificationResult extends Activity
 				//borar DB
 				else {
 					insCore.EliminarReceta(receta.idReceta, ctx);
+					mNotificationManager.cancel(Integer.valueOf(idNotificacion));
 					finish();
 				}
 			}

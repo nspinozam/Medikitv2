@@ -27,7 +27,6 @@ public class NotificationButtonAction extends BroadcastReceiver {
 	 public void onReceive(Context context, Intent intent) {
 		receta = (Receta)intent.getExtras().getSerializable("Receta");
 		idNotificacion = intent.getExtras().getInt("idNotificacion");
-		Log.i("ButtonAction idNotificacion", String.valueOf(idNotificacion));
 		ctx = context;
 		String tipo = intent.getType();
 		NotificationManager manager =
@@ -37,22 +36,21 @@ public class NotificationButtonAction extends BroadcastReceiver {
 			manager.cancel(Integer.valueOf(idNotificacion));
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 			Calendar finish_date = Calendar.getInstance();
+			Log.i("receta fecha I", receta.fechaI.toString());
 			try {
 				finish_date.setTime(sdf.parse(receta.fechaI));
 				finish_date.add(Calendar.DATE, receta.duracionDias);
-				finish_date.set(Calendar.MONTH, finish_date.MONTH-1);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				//finish_date.set(Calendar.MONTH, finish_date.MONTH-1);
+			} catch (ParseException e) {}
 			Calendar today = Calendar.getInstance();
 			//Si la fecha de fin no ha terminado
-			if(finish_date.compareTo(today)==-1) {
+			Log.i("Fecha fin", finish_date.toString());
+			Log.i("Fecha hoy", today.toString());
+			if(finish_date.compareTo(today)==1) {
 				long timeInMillis = today.getTimeInMillis()+MILLISPARADIA;
 				Intent myIntent = new Intent(ctx, MyReceiver.class);
 			    myIntent.putExtra("Receta", receta);
 			    myIntent.putExtra("idNotificacion",idNotificacion);
-			    Log.i("Buttton idNotificacion send", String.valueOf(idNotificacion));
 				pendingIntent = PendingIntent.getBroadcast(ctx, Integer.valueOf(idNotificacion), myIntent,0);
 			    @SuppressWarnings("static-access")
 				AlarmManager alarmManager = (AlarmManager)ctx.getSystemService(ctx.ALARM_SERVICE);
@@ -74,7 +72,6 @@ public class NotificationButtonAction extends BroadcastReceiver {
 			Intent myIntent = new Intent(ctx, MyReceiver.class);
 		    myIntent.putExtra("Receta", receta);
 		    myIntent.putExtra("idNotificacion", idNotificacion);
-		    Log.i("Button idNotificacion send", String.valueOf(idNotificacion));
 			pendingIntent = PendingIntent.getBroadcast(ctx, Integer.valueOf(idNotificacion), myIntent,0);
 		    AlarmManager alarmManager = (AlarmManager)ctx.getSystemService(ctx.ALARM_SERVICE);
 		    alarmManager.set(AlarmManager.RTC, timeInMillis, pendingIntent);
