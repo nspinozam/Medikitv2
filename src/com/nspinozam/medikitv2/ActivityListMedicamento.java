@@ -279,11 +279,26 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			int res = -1;
 			switch(item.getItemId()) {
-			case R.id.borrar_usuario_context:	
-				res = borrarUsuario(index);
-				if(res>-1){
-					Toast.makeText(getApplicationContext(), "Medicamento eliminado con éxito!", Toast.LENGTH_SHORT).show();
-				}
+			case R.id.borrar_usuario_context:
+				AlertDialog.Builder alertDialogB = new AlertDialog.Builder(ctx);
+				alertDialogB.setTitle("Eliminar Medicamento");
+				alertDialogB.setMessage("Realmente desea eliminar el medicamento?")
+				.setCancelable(false)
+				.setPositiveButton("Si",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						int resT = borrarUsuario(index);
+						if(resT>-1){
+							Toast.makeText(getApplicationContext(), "Medicamento eliminado con éxito!", Toast.LENGTH_SHORT).show();
+						}
+					}
+				  })
+				.setNegativeButton("No",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						dialog.cancel();
+					}
+				});
+				AlertDialog alertDialog = alertDialogB.create();
+				alertDialog.show();
 				mode.finish();
 				return true;
 			case R.id.modificar_usuario_context:

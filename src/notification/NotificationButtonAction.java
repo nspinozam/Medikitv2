@@ -31,7 +31,7 @@ public class NotificationButtonAction extends BroadcastReceiver {
 		String tipo = intent.getType();
 		NotificationManager manager =
 			    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		manager.cancel(Integer.valueOf(idNotificacion));
+		//manager.cancel(Integer.valueOf(idNotificacion));
 		if(tipo.equals("take-it")){
 			manager.cancel(Integer.valueOf(idNotificacion));
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -47,7 +47,7 @@ public class NotificationButtonAction extends BroadcastReceiver {
 			Log.i("Fecha fin", finish_date.toString());
 			Log.i("Fecha hoy", today.toString());
 			if(finish_date.compareTo(today)==1) {
-				long timeInMillis = today.getTimeInMillis()+MILLISPARADIA;
+				long timeInMillis = today.getTimeInMillis()+(MILLISPARADIA*receta.cadaDias);
 				Intent myIntent = new Intent(ctx, MyReceiver.class);
 			    myIntent.putExtra("Receta", receta);
 			    myIntent.putExtra("idNotificacion",idNotificacion);

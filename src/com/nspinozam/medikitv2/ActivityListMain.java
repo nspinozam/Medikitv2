@@ -10,6 +10,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -58,8 +59,6 @@ public class ActivityListMain extends Activity{
 		list.setAdapter(adapter);
 		String name = core.consultarNombreP(id, ctx);
 		actionBar.setTitle(name);
-		Log.i("listaRecetas", listaRecetas.toString());
-		Log.i("listaRecetasStr", listaRecetasStr.toString());
 	}
 	
 	private ArrayList<String> crearArray(ArrayList lista) {
@@ -107,8 +106,6 @@ public class ActivityListMain extends Activity{
 		
 		listaRecetas = core.RecetaListInicial(id,ctx);
 		listaRecetasStr=crearArray(listaRecetas);
-		Log.i("listaRecetas", listaRecetas.toString());
-		Log.i("listaRecetasStr", listaRecetasStr.toString());
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, listaRecetasStr);
 		list.setAdapter(adapter);
@@ -168,12 +165,27 @@ private ActionMode.Callback mCallback = new ActionMode.Callback() {
 			int res = -1;
 			switch(item.getItemId()) {
 			case R.id.borrar_usuario_context:
-				Log.i("lsitaRecetas",listaRecetas.toString());
-				int id = (Integer) ((ArrayList)listaRecetas.get(index)).get(0);
-				res = core.EliminarReceta(id, ctx);
-				if(res>-1){
-					Toast.makeText(getApplicationContext(), "Receta eliminada con éxito!", Toast.LENGTH_SHORT).show();
-				}
+				final int idx = (Integer) ((ArrayList)listaRecetas.get(index)).get(0);
+				AlertDialog.Builder alertDialogB = new AlertDialog.Builder(ctx);
+				alertDialogB.setTitle("Eliminar Receta");
+				alertDialogB.setMessage("Realmente desea eliminar la receta?")
+				.setCancelable(false)
+				.setPositiveButton("Si",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int idY) {
+						int resT = core.EliminarReceta(idx, ctx);
+						refresh();
+						if(resT>-1){
+							Toast.makeText(getApplicationContext(), "Receta eliminada con éxito!", Toast.LENGTH_SHORT).show();
+						}
+					}
+				  })
+				.setNegativeButton("No",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						dialog.cancel();
+					}
+				});
+				AlertDialog alertDialog = alertDialogB.create();
+				alertDialog.show();
 				mode.finish();
 				return true;
 			case R.id.modificar_usuario_context:
@@ -190,5 +202,13 @@ private ActionMode.Callback mCallback = new ActionMode.Callback() {
 			return false;
 		}
 	};
+	public void refresh(){
+		Intent intent = getIntent();
+	    overridePendingTransition(0, 0);
+	    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+	    finish();
+	    overridePendingTransition(0, 0);
+	    startActivity(intent);
+	}
 
 }

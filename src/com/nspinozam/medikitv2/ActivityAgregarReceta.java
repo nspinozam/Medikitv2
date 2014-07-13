@@ -75,6 +75,7 @@ public class ActivityAgregarReceta extends Activity{
 	public Bundle saved;
 	private int horas, minutos;
 	Calendar now_calendar = Calendar.getInstance();
+	int sumado = 0;
 	
 	public static Medicamento medicamento;
 	public static Presentacion presentacion;
@@ -400,12 +401,17 @@ public class ActivityAgregarReceta extends Activity{
 			date_recipe.setDate(now_calendar.get(Calendar.DAY_OF_MONTH));
 			date_recipe.setYear(now_calendar.get(Calendar.YEAR)-1900);
 			recipe_calendar.setTime(date_recipe);
-			
-			if(date_recipe.after(date_now)){
+			if(date_recipe.after(date_now) /*&& sumado==0*/){
+				//recipe_calendar.setTime(date_recipe);
+				//now_calendar.set(Calendar.DAY_OF_MONTH, Calendar.DAY_OF_MONTH+1);
+				//date_recipe.setDate(now_calendar.get(Calendar.DAY_OF_MONTH));
 				recipe_calendar.setTime(date_recipe);
+				//sumado = 1;
 			}
 			else{
+				//date_recipe.setDate(now_calendar.get(Calendar.DAY_OF_MONTH)+1);
 				date_recipe.setDate(now_calendar.get(Calendar.DAY_OF_MONTH)+1);
+				recipe_calendar.setTime(date_recipe);
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();

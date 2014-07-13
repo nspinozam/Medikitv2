@@ -131,7 +131,7 @@ public class ActivityVerEditarReceta extends Activity{
     	btn_fechaI.setText(receta.fechaI);
     	String horaI = core.obtenerHoraI((int)idReceta, ctx);
     	btn_horaI.setText(horaI);
-    	et_cantidad_dias.setText(String.valueOf(receta.duracionDias));
+    	et_cantidad_dias.setText(String.valueOf(receta.cadaDias));
     	et_veces_dia.setText(String.valueOf(receta.vecesDia));
     	et_duracion.setText(String.valueOf(receta.duracionDias));
     	et_nota.setText(receta.nota);

@@ -71,12 +71,12 @@ public class NotificationResult extends Activity
 				Calendar today = Calendar.getInstance();
 				//Si la fecha de fin no ha terminado
 				if(finish_date.compareTo(today)==1) {
-					long timeInMillis = today.getTimeInMillis()+MILLISPARADIA;
-					Intent myIntent = new Intent(NotificationResult.this, MyReceiver.class);
+					long timeInMillis = today.getTimeInMillis()+(MILLISPARADIA*receta.cadaDias);
+					Intent myIntent = new Intent(ctx, MyReceiver.class);//estaba NotificationResult.this en vez de ctx
 				    myIntent.putExtra("Receta", receta);
 				    myIntent.putExtra("idNotificacion", idNotificacion);
 				    Log.i("Result idNotificacion send", String.valueOf(idNotificacion));
-					pendingIntent = PendingIntent.getBroadcast(NotificationResult.this, Integer.valueOf(receta.idReceta), myIntent,0);
+					pendingIntent = PendingIntent.getBroadcast(ctx, Integer.valueOf(receta.idReceta), myIntent,0); //igual lo del ctx
 				    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 				    alarmManager.set(AlarmManager.RTC, timeInMillis, pendingIntent);
 					finish();
