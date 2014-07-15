@@ -355,24 +355,24 @@ public class Core {
 		}
 		return res;
 	}
-	/*public int ActualizarHorarios(long idReceta,ArrayList horarios, Context context){
-		int res = 0;
+
+	public ArrayList obtenerIdHoras(int idReceta,Context context) {
+		ArrayList listaIds = new ArrayList();
 		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
-		SQLiteDatabase db = rdb.getWritableDatabase();
-		ContentValues nuevoRegistro = new ContentValues();
-		nuevoRegistro.put("idReceta", idReceta);
-		nuevoRegistro.put("hora", contenedor.get(1).toString());
-		String[] whereArgs = new String[]{String.valueOf(idReceta)};
-		if(db!=null){
-			try{
-				db.update("Receta", nuevoRegistro, "idReceta=?", whereArgs);
-				res = 1;
-			}catch(SQLException e){
-				return -1;
+		SQLiteDatabase db = rdb.getReadableDatabase();
+
+		if (db != null) {
+			//String[] fields = new String[] { "idPresentacion", "nombrePresentacion" ,"notaPresentacion"};
+			Cursor query = db.rawQuery("SELECT idHora FROM Hour WHERE idReceta = "+idReceta,null);
+			while(query.moveToNext()) {
+					int temp = 0;
+					temp= query.getInt(0);
+					listaIds.add(temp);
 			}
 		}
-		return res;
-	}*/
+		db.close();
+		return listaIds;
+	}
 	
 	public Receta obtenerReceta(int id,Context context) {
 		Receta receta = null;
@@ -557,8 +557,8 @@ public class Core {
 			//String[] fields = new String[] { "idPresentacion", "nombrePresentacion" ,"notaPresentacion"};
 			Cursor query = db.rawQuery("SELECT idReceta FROM Receta WHERE Receta.rEstado = 0 AND Receta.idUsuario = "+id,null);
 			while(query.moveToNext()) {
-					ArrayList temp = new ArrayList();
-					temp.add(query.getInt(0));
+					int temp = 0;
+					temp= query.getInt(0);
 					listaPresentaciones.add(temp);
 			}
 		}

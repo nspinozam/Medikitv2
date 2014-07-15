@@ -7,6 +7,7 @@ import database.Core;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -307,9 +308,22 @@ public class ActivityListUser extends Activity implements Parcelable{
 	 * @param index
 	 */
 	private int borrarUsuario(int index) {
+		NotificationManager manager =
+			    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		ArrayList arr = new ArrayList();
+		ArrayList arrIds = new ArrayList();
 		//res = resultado de la operación-1 == error
 		int res = -1;
-		Usuario usuario = listaPacientes.get(index);							
+		Usuario usuario = listaPacientes.get(index);			
+		arr= core.RecetasUsuario(usuario.idUsuario, this);
+		for (int i = 0; i < arr.size(); i++) {
+			int id= (Integer) arr.get(i);
+			core.EliminarReceta(id, ctx);
+			arrIds = core.obtenerIdHoras(id, ctx);
+			for (int j = 0; j < arrIds.size(); j++) {
+				manager.cancel((Integer)arrIds.get(j));
+			}
+		}
 		res = core.EliminarUsuario(usuario.idUsuario, ctx);
 		
 		Intent intent = getIntent();

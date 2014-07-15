@@ -207,6 +207,7 @@ public class ActivityAgregarReceta extends Activity{
 						fechaI, HoraI, duracionDias, cadaDias, vecesDia, nota);
 				ArrayList data = calculoHoras(vecesDia, HoraI);
 				onCreateDialog(saved,data);
+				receta.cadaDias = cadaDias;
 				return 0;
 			}
 			else{
@@ -369,10 +370,12 @@ public class ActivityAgregarReceta extends Activity{
 	                      agregarDB();
 	                      Calendar recipe_calendar = Calendar.getInstance();
 	                      receta.nombreMedicina = medicamento.nombreComercial;
+	                      receta.cadaDias = Integer.valueOf(et_cantidad_dias.getText().toString());
 	                      for (int i = 0; i < horasReceta.size(); i++) {
 	                    	  recipe_calendar = configurarHorasN(recipe_calendar, (ArrayList)horasReceta.get(i));
 		                      Intent myIntent = new Intent(ActivityAgregarReceta.this, MyReceiver.class);
 		          		      myIntent.putExtra("Receta", receta);
+		          		      Log.i("CadaDias", String.valueOf(receta.cadaDias));
 		          		      long idH = (Long) idHoras.get(i);
 		          		      myIntent.putExtra("idNotificacion", (int)idH);
 		          			  pendingIntent = PendingIntent.getBroadcast(ActivityAgregarReceta.this, (int)idH , myIntent, PendingIntent.FLAG_ONE_SHOT);
