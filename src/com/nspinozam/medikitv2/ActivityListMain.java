@@ -6,6 +6,7 @@ import models.Medicamento;
 import models.Receta;
 import models.Usuario;
 import database.Core;
+import android.R.color;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -43,6 +45,7 @@ public class ActivityListMain extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_user);
+		RelativeLayout rl = (RelativeLayout)findViewById(R.id.idLayout);
 		ctx = this;
 		core = new Core();
 		activity = this;
@@ -54,9 +57,14 @@ public class ActivityListMain extends Activity{
 		//Cargar lista de pacientes
 		listaRecetas = core.RecetaListInicial(id,ctx);
 		listaRecetasStr=crearArray(listaRecetas);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, listaRecetasStr);
-		list.setAdapter(adapter);
+		if(listaRecetas.size()>0){
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+	                android.R.layout.simple_list_item_1, listaRecetasStr);
+			list.setAdapter(adapter);
+		}
+		else{
+			rl.setBackgroundResource(R.drawable.sad);
+		}
 		String name = core.consultarNombreP(id, ctx);
 		actionBar.setTitle(name);
 	}

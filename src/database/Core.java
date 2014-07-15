@@ -536,7 +536,6 @@ public class Core {
 					+ "WHERE Receta.idTipoConsumo = Presentacion.idPresentacion AND Receta.idMedicina = Medicamento.idMedicamento" +
 					" AND Presentacion.pEstado = 0 AND Receta.rEstado = 0 AND Medicamento.mEstado = 0 AND Receta.idUsuario = "+id,null);
 			while(query.moveToNext()) {
-					Log.i("LLega a Core","prueba");
 					ArrayList temp = new ArrayList();
 					temp.add(query.getInt(0));
 					temp.add(query.getInt(1));
@@ -548,6 +547,25 @@ public class Core {
 		db.close();
 		return listaPresentaciones;
 	}
+	
+	public ArrayList RecetasUsuario(int id,Context context) {
+		ArrayList listaPresentaciones = new ArrayList();
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getReadableDatabase();
+
+		if (db != null) {
+			//String[] fields = new String[] { "idPresentacion", "nombrePresentacion" ,"notaPresentacion"};
+			Cursor query = db.rawQuery("SELECT idReceta FROM Receta WHERE Receta.rEstado = 0 AND Receta.idUsuario = "+id,null);
+			while(query.moveToNext()) {
+					ArrayList temp = new ArrayList();
+					temp.add(query.getInt(0));
+					listaPresentaciones.add(temp);
+			}
+		}
+		db.close();
+		return listaPresentaciones;
+	}
+	
 	
 	public String consultarNombreC(int id,Context context) {
 		String nombre = "";
