@@ -10,7 +10,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.app.TaskStackBuilder;
+import android.support.v4.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import android.app.Notification.Builder;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat.InboxStyle;
 import android.util.Log;
 import android.widget.RemoteViews;
                            
@@ -81,7 +82,11 @@ public class MyAlarmService extends Service {
        PendingIntent pending = PendingIntent.getBroadcast(this, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
        PendingIntent pending2 = PendingIntent.getBroadcast(this, 1, intent2, PendingIntent.FLAG_UPDATE_CURRENT);// PendingIntent.FLAG_CANCEL_CURRENT
 
-       Builder mBuilder = new Notification.Builder(this)
+       //TODO if para las versiones
+       if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN){
+       }
+       
+       android.support.v4.app.NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
     	        .setSmallIcon(R.drawable.ic_launcher)
     	        .setContentTitle("It's time to take your meds!")
     	        .setContentText("Medikit")
@@ -90,7 +95,7 @@ public class MyAlarmService extends Service {
     	        .addAction(R.drawable.ic_launcher,"Aceptar", pending)
     	        .setAutoCancel(true);
        
-       Notification.InboxStyle inboxStyle = new Notification.InboxStyle(mBuilder);
+       InboxStyle inboxStyle = new NotificationCompat.InboxStyle(mBuilder);
        inboxStyle.setBigContentTitle("It's Time to Take Your Meds!");
        for (int i = 0; i < events.length; i++) {  
            inboxStyle.addLine(events[i]);  
