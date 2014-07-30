@@ -28,7 +28,9 @@ public final class R {
         public static final int ic_add_patient=0x7f020003;
         public static final int ic_launcher=0x7f020004;
         public static final int imgadd=0x7f020005;
-        public static final int sad=0x7f020006;
+        public static final int no_data=0x7f020006;
+        public static final int no_usuarios_bg=0x7f020007;
+        public static final int sad=0x7f020008;
     }
     public static final class id {
         public static final int Med=0x7f080019;

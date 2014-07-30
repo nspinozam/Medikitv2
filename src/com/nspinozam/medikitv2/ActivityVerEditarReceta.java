@@ -89,7 +89,6 @@ public class ActivityVerEditarReceta extends Activity{
 		Intent i = getIntent();
 		activity = this;
 		saved = savedInstanceState;
-		//TODO probar con medicamento=null, para quitar que cuando se va acrear uno nuevo, le salga el √∫ltimo por defecto
 		ctx = this;
 		idReceta = i.getLongExtra("idReceta", 9999);
 		accion = i.getIntExtra("accion", 0);
@@ -173,9 +172,9 @@ public class ActivityVerEditarReceta extends Activity{
 			int ok = validarNulos();
 			if(ok == 0){}
 			else if(ok==1){
-				Toast.makeText(ctx, "La duraciÛn no puede ser menor al lapso de tiempo", Toast.LENGTH_LONG).show();
+				Toast.makeText(ctx, "La duraci√≥n no puede ser menor al lapso de tiempo", Toast.LENGTH_LONG).show();
 			} else{
-				Toast.makeText(ctx, "No se permiten espacios vacÌos", Toast.LENGTH_LONG).show();
+				Toast.makeText(ctx, "No se permiten espacios vac√≠os", Toast.LENGTH_LONG).show();
 			}
 			return true;
 		}
@@ -383,7 +382,7 @@ public class ActivityVerEditarReceta extends Activity{
 		}
 	    //Se construye el Dialog
 	    final AlertDialog dialog = builder.create();
-	    dialog.setTitle("Define las horas de notificaciÛn");
+	    dialog.setTitle("Define las horas de notificaci√≥n");
 	    dialog.show();
 	    // Se sobre escribe la acci√≥n del onclick para mantener el Dialog si hay error
 	    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()

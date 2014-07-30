@@ -117,7 +117,7 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 		    tv_nuevoNombreGenerico.setText(medD.nombreGenerico);
 	    }
 	    
-	    // Se sobre escribe la acción del onclick para mantener el Dialog si hay error
+	    // Se sobre escribe la acciï¿½n del onclick para mantener el Dialog si hay error
 	    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
 	          {            
 	              @Override
@@ -125,7 +125,7 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 	              {
 	                  Boolean wantToCloseDialog = false;
 	                //TODO Agregar un hilo
-	                  //Acción del botón aceptar
+	                  //Acciï¿½n del botï¿½n aceptar
 	            	  
 	                  tv_nuevoNombreComercial.addTextChangedListener(new TextWatcher() {
 	            		    @Override
@@ -191,7 +191,7 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
                 	   //verificar error
                 	   if(res >= 0){
                 		   wantToCloseDialog = true;
-                		   Toast.makeText(ctx, "Medicamento "+ resTexto+" con éxito", Toast.LENGTH_LONG).show();
+                		   Toast.makeText(ctx, "Medicamento "+ resTexto+" con Ã©xito", Toast.LENGTH_LONG).show();
                 		   activity.finish();
                 		   //onResume();
                 	   }
@@ -202,10 +202,10 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
                 	   }
 	                   }else{
 	                	   if(nombreComercial.equals("")){
-	                		   tv_nuevoNombreComercial.setError("Este espacio no puede estar vacío");
+	                		   tv_nuevoNombreComercial.setError("Este espacio no puede estar vacÃ­o");
 	                	   }
 	                	   else if(nombreGenerico.equals("")){
-	                		   tv_nuevoNombreGenerico.setError("Este espacio no puede estar vacío");
+	                		   tv_nuevoNombreGenerico.setError("Este espacio no puede estar vacÃ­o");
 	                	   }
 	                   }
 	                  if(wantToCloseDialog)
@@ -229,7 +229,6 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
                 android.R.layout.simple_list_item_1, listaMedicamentos);
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(onClick);
-        //list.setOnItemLongClickListener(onLongClick);
 	}
 	
 	private OnItemClickListener onClick = new OnItemClickListener() {
@@ -288,7 +287,7 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 					public void onClick(DialogInterface dialog,int id) {
 						int resT = borrarUsuario(index);
 						if(resT>-1){
-							Toast.makeText(getApplicationContext(), "Medicamento eliminado con éxito!", Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(), "Medicamento eliminado con Ã©xito!", Toast.LENGTH_SHORT).show();
 						}
 					}
 				  })
@@ -304,7 +303,7 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 			case R.id.modificar_usuario_context:
 				res = modificarUsuario(index);
 				if(res>-1){
-					Toast.makeText(getApplicationContext(), "Medicamento modificado con éxito!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Medicamento modificado con Ã©xito!", Toast.LENGTH_SHORT).show();
 				}
 				mode.finish();
 				return true;
@@ -314,11 +313,11 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 	};
 	
 	/**
-	 * Función para borrar el paciente
+	 * Funciï¿½n para borrar el paciente
 	 * @param index
 	 */
 	private int borrarUsuario(int index) {
-		//res = resultado de la operación-1 == error
+		//res = resultado de la operaciï¿½n-1 == error
 		int res = -1;
 		Medicamento med = listaMedicamentos.get(index);							
 		res = core.EliminarMedicamento(med, ctx);
@@ -334,7 +333,7 @@ public class ActivityListMedicamento extends Activity implements Parcelable{
 	
 
 	private int modificarUsuario(int index) {
-		//res = resultado de la operación-1 == error
+		//res = resultado de la operaciï¿½n-1 == error
 		int res = -1;
 		Medicamento usuario = listaMedicamentos.get(index);
 		AlertDialog newUser = onCreateDialog(saved,2,usuario);

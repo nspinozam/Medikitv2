@@ -138,9 +138,9 @@ public class ActivityAgregarReceta extends Activity{
 			int ok = validarNulos();
 			if(ok == 0){}
 			else if(ok==1){
-				Toast.makeText(ctx, "La duraciÛn no puede ser menor al lapso de tiempo", Toast.LENGTH_LONG).show();
+				Toast.makeText(ctx, "La duraci√≥n no puede ser menor al lapso de tiempo", Toast.LENGTH_LONG).show();
 			} else{
-				Toast.makeText(ctx, "No se permiten espacios vacÌos", Toast.LENGTH_LONG).show();
+				Toast.makeText(ctx, "No se permiten espacios vac√≠os", Toast.LENGTH_LONG).show();
 			}
 			return true;
 		}
@@ -196,7 +196,6 @@ public class ActivityAgregarReceta extends Activity{
 				&& !et_veces_dia.getText().toString().equals("") && !et_duracion.getText().toString().equals("")){
 			int cantidadConsumo = Integer.valueOf(cantidad_dosis.getText().toString());
 			String fechaI = btn_fechaI.getText().toString();
-			Log.i("fechaI", fechaI);
 			String HoraI = btn_horaI.getText().toString();
 			int duracionDias = Integer.valueOf(et_duracion.getText().toString());
 			int cadaDias = Integer.valueOf(et_cantidad_dias.getText().toString());
@@ -306,7 +305,6 @@ public class ActivityAgregarReceta extends Activity{
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
-			//btn_fechaI.setText(String.valueOf(dayOfMonth)+"-"+U.NombreMes(monthOfYear)+"-"+year);
 			btn_fechaI.setText(String.valueOf(dayOfMonth)+"-"+(monthOfYear+1)+"-"+year);
 		}
 	};
@@ -350,7 +348,7 @@ public class ActivityAgregarReceta extends Activity{
 		}
 	    //Se construye el Dialog
 	    final AlertDialog dialog = builder.create();
-	    dialog.setTitle("Define las horas de notificaciÛn");
+	    dialog.setTitle("Define las horas de notificaci√≥n");
 	    dialog.show();
 	    // Se sobre escribe la acci√≥n del onclick para mantener el Dialog si hay error
 	    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
@@ -375,7 +373,6 @@ public class ActivityAgregarReceta extends Activity{
 	                    	  recipe_calendar = configurarHorasN(recipe_calendar, (ArrayList)horasReceta.get(i));
 		                      Intent myIntent = new Intent(ActivityAgregarReceta.this, MyReceiver.class);
 		          		      myIntent.putExtra("Receta", receta);
-		          		      Log.i("CadaDias", String.valueOf(receta.cadaDias));
 		          		      long idH = (Long) idHoras.get(i);
 		          		      myIntent.putExtra("idNotificacion", (int)idH);
 		          			  pendingIntent = PendingIntent.getBroadcast(ActivityAgregarReceta.this, (int)idH , myIntent, PendingIntent.FLAG_ONE_SHOT);
@@ -404,15 +401,11 @@ public class ActivityAgregarReceta extends Activity{
 			date_recipe.setDate(now_calendar.get(Calendar.DAY_OF_MONTH));
 			date_recipe.setYear(now_calendar.get(Calendar.YEAR)-1900);
 			recipe_calendar.setTime(date_recipe);
-			if(date_recipe.after(date_now) /*&& sumado==0*/){
-				//recipe_calendar.setTime(date_recipe);
-				//now_calendar.set(Calendar.DAY_OF_MONTH, Calendar.DAY_OF_MONTH+1);
-				//date_recipe.setDate(now_calendar.get(Calendar.DAY_OF_MONTH));
+			if(date_recipe.after(date_now)){
 				recipe_calendar.setTime(date_recipe);
 				//sumado = 1;
 			}
 			else{
-				//date_recipe.setDate(now_calendar.get(Calendar.DAY_OF_MONTH)+1);
 				date_recipe.setDate(now_calendar.get(Calendar.DAY_OF_MONTH)+1);
 				recipe_calendar.setTime(date_recipe);
 			}

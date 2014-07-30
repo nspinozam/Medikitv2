@@ -10,6 +10,7 @@ import android.R.color;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,6 +41,7 @@ public class ActivityListMain extends Activity{
 	ArrayList<String> listaRecetasStr = new ArrayList<String>();
 	ArrayList listaRecetas = new ArrayList();//TODO revisar si hay que hacer una clase nueva para agregar las recetas o con la existente ya basta
 	public static SharedPreferences prefs;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +185,9 @@ private ActionMode.Callback mCallback = new ActionMode.Callback() {
 						int resT = core.EliminarReceta(idx, ctx);
 						refresh();
 						if(resT>-1){
-							Toast.makeText(getApplicationContext(), "Receta eliminada con éxito!", Toast.LENGTH_SHORT).show();
+							//eliminarNotificaciones(idx);
+							core.EliminarHorarios(id, ctx);
+							Toast.makeText(getApplicationContext(), "Receta eliminada con Ã©xito!", Toast.LENGTH_SHORT).show();
 						}
 					}
 				  })
@@ -210,6 +214,17 @@ private ActionMode.Callback mCallback = new ActionMode.Callback() {
 			return false;
 		}
 	};
+	
+	private void eliminarNotificaciones(int idx) {
+		NotificationManager manager =
+			    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		ArrayList arrIds = new ArrayList();
+		arrIds = core.obtenerIdHoras(id, ctx);
+		for (int j = 0; j < arrIds.size(); j++) {
+			manager.cancel((Integer)arrIds.get(j));
+		}
+	}
+	
 	public void refresh(){
 		Intent intent = getIntent();
 	    overridePendingTransition(0, 0);

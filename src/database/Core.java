@@ -298,7 +298,6 @@ public class Core {
 		if(db!=null){
 			try{
 				db.update("Receta",values, "idReceta=?", whereArgs);
-				//db.delete("Receta", "idReceta=?", whereArgs);
 				res = 1;
 			}catch(SQLException e){
 				return -1;
@@ -362,8 +361,24 @@ public class Core {
 		SQLiteDatabase db = rdb.getReadableDatabase();
 
 		if (db != null) {
-			//String[] fields = new String[] { "idPresentacion", "nombrePresentacion" ,"notaPresentacion"};
 			Cursor query = db.rawQuery("SELECT idHora FROM Hour WHERE idReceta = "+idReceta,null);
+			while(query.moveToNext()) {
+					int temp = 0;
+					temp= query.getInt(0);
+					listaIds.add(temp);
+			}
+		}
+		db.close();
+		return listaIds;
+	}
+	
+	public ArrayList obtenerTodosIdHoras(Context context) {
+		ArrayList listaIds = new ArrayList();
+		MedikitDB rdb = new MedikitDB(context, "database", null, 1);
+		SQLiteDatabase db = rdb.getReadableDatabase();
+
+		if (db != null) {
+			Cursor query = db.rawQuery("SELECT idHora FROM Hour ",null);
 			while(query.moveToNext()) {
 					int temp = 0;
 					temp= query.getInt(0);

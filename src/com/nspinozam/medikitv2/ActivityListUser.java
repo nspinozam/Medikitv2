@@ -128,7 +128,7 @@ public class ActivityListUser extends Activity implements Parcelable{
 		    tv_nuevoNombre.setText(userD.nombreUsuario);
 	    }
 	    
-	    // Se sobre escribe la acción del onclick para mantener el Dialog si hay error
+	    // Se sobre escribe la acciï¿½n del onclick para mantener el Dialog si hay error
 	    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
 	          {            
 	              @Override
@@ -136,7 +136,7 @@ public class ActivityListUser extends Activity implements Parcelable{
 	              {
 	                  Boolean wantToCloseDialog = false;
 	                //TODO Agregar un hilo
-	                  //Acción del botón aceptar
+	                  //Acciï¿½n del botï¿½n aceptar
 	            	  
 	            	   tv_nuevoNombre.addTextChangedListener(new TextWatcher() {
 	            		    @Override
@@ -176,7 +176,7 @@ public class ActivityListUser extends Activity implements Parcelable{
                 	   //verificar error
                 	   if(res >= 0){
                 		   wantToCloseDialog = true;
-                		   Toast.makeText(ctx, "Usuario "+ resTexto+" con éxito", Toast.LENGTH_LONG).show();
+                		   Toast.makeText(ctx, "Usuario "+ resTexto+" con Ã©xito", Toast.LENGTH_LONG).show();
                 		   onResume();
                 	   }
                 	   else{
@@ -184,7 +184,7 @@ public class ActivityListUser extends Activity implements Parcelable{
                 		   onResume();
                 	   }
 	                   }else{
-	                	   tv_nuevoNombre.setError("Este espacio no puede estar vacío");
+	                	   tv_nuevoNombre.setError("Este espacio no puede estar vacÃ­o");
 	                   }
 	                  if(wantToCloseDialog)
 	                      dialog.dismiss();
@@ -227,8 +227,6 @@ public class ActivityListUser extends Activity implements Parcelable{
 			Intent toListMain = new Intent(ctx, ActivityListMain.class);
 			toListMain.putExtra("Usuario", user);
 		    startActivity(toListMain); 
-		    //activity.finish();
-			//TODO Enviar los datos a la actividad siguiente
 		}
 	};
 	
@@ -278,7 +276,7 @@ public class ActivityListUser extends Activity implements Parcelable{
 					public void onClick(DialogInterface dialog,int id) {
 						int resT = borrarUsuario(index);
 						if(resT>-1){
-							Toast.makeText(getApplicationContext(), "Usuario eliminado con éxito!", Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(), "Usuario eliminado con Ã©xito!", Toast.LENGTH_SHORT).show();
 						}
 					}
 				  })
@@ -294,7 +292,7 @@ public class ActivityListUser extends Activity implements Parcelable{
 			case R.id.modificar_usuario_context:
 				res = modificarUsuario(index);
 				if(res>-1){
-					Toast.makeText(getApplicationContext(), "Usuario modificado con éxito!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Usuario modificado con Ã©xito!", Toast.LENGTH_SHORT).show();
 				}
 				mode.finish();
 				return true;
@@ -304,25 +302,28 @@ public class ActivityListUser extends Activity implements Parcelable{
 	};
 	
 	/**
-	 * Función para borrar el paciente
+	 * Funciï¿½n para borrar el paciente
 	 * @param index
 	 */
+	@SuppressWarnings("rawtypes")
 	private int borrarUsuario(int index) {
 		NotificationManager manager =
 			    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		ArrayList arr = new ArrayList();
 		ArrayList arrIds = new ArrayList();
-		//res = resultado de la operación-1 == error
+		//res = resultado de la operaciï¿½n-1 == error
 		int res = -1;
 		Usuario usuario = listaPacientes.get(index);			
 		arr= core.RecetasUsuario(usuario.idUsuario, this);
+		//TODO quitar notificaciones
 		for (int i = 0; i < arr.size(); i++) {
 			int id= (Integer) arr.get(i);
 			core.EliminarReceta(id, ctx);
-			arrIds = core.obtenerIdHoras(id, ctx);
+			/*arrIds = core.obtenerIdHoras(id, ctx);
 			for (int j = 0; j < arrIds.size(); j++) {
 				manager.cancel((Integer)arrIds.get(j));
-			}
+			}*/
+			core.EliminarHorarios(id, ctx);
 		}
 		res = core.EliminarUsuario(usuario.idUsuario, ctx);
 		
@@ -337,7 +338,7 @@ public class ActivityListUser extends Activity implements Parcelable{
 	
 
 	private int modificarUsuario(int index) {
-		//res = resultado de la operación-1 == error
+		//res = resultado de la operaciï¿½n-1 == error
 		int res = -1;
 		Usuario usuario = listaPacientes.get(index);
 		AlertDialog newUser = onCreateDialog(saved,2,usuario);
@@ -349,13 +350,11 @@ public class ActivityListUser extends Activity implements Parcelable{
 
 	@Override
 	public int describeContents() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		// TODO Auto-generated method stub
 		
 	}
 
